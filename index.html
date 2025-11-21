@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Daot — Boats & Ocean Design</title>
+<meta name="description" content="Daot — beautiful ocean-inspired site about boats. 15 style themes, photo gallery, detailed articles, and a vibrant blue-hued design system." />
+
+<style>
+  /* ========== Basic layout & fonts ========== */
+  :root{
+    --bg: #071428;
+    --card: #0f2b45;
+    --muted: #9bb7cf;
+    --accent: #2aa7ff;
+    --accent-2: #0077c2;
+    --glass: rgba(255,255,255,0.06);
+    --text: #e8f6ff;
+    --radius: 12px;
+    --maxw: 1200px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg,var(--bg) 0%, #021026 60%);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+  }
+  .wrap{max-width:var(--maxw);margin:40px auto;padding:28px}
+  header{
+    display:flex;align-items:center;gap:18px;
+    justify-content:space-between;margin-bottom:28px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;
+    font-weight:700;font-size:20px;letter-spacing:0.6px;
+  }
+  .logo{
+    width:56px;height:56px;border-radius:12px;background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 6%),
+      linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,0.45);
+  }
+  .logo svg{width:34px;height:34px;transform:translateY(-2px)}
+  nav{display:flex;gap:12px;align-items:center}
+  nav a{color:var(--text);text-decoration:none;padding:8px 12px;border-radius:10px}
+  nav a:hover{background:var(--glass)}
+  /* theme chooser */
+  .theme-control{display:flex;gap:10px;align-items:center}
+  select{
+    background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);
+    padding:8px 10px;border-radius:8px;
+  }
+
+  /* ========== Hero ========== */
+  .hero{
+    display:grid;grid-template-columns:1fr 420px;gap:26px;align-items:stretch;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    border-radius:16px;padding:26px;box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    overflow:hidden;
+  }
+  .hero-left h1{
+    margin:0 0 12px 0;font-size:36px;line-height:1.02;
+    text-shadow:0 6px 24px rgba(0,0,0,0.6);
+  }
+  .lead{color:var(--muted);margin-bottom:18px}
+  .cta-row{display:flex;gap:12px}
+  .btn{
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:12px 16px;border-radius:10px;
+    color:white;font-weight:600;border:none;cursor:pointer;box-shadow:0 8px 20px rgba(26,94,153,0.24)
+  }
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+
+  /* hero-right gallery */
+  .hero-right{display:grid;grid-template-rows:1fr auto;gap:12px}
+  .hero-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .hero-gallery img{width:100%;height:180px;object-fit:cover;border-radius:10px;display:block}
+
+  /* ========== Content sections ========== */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px}
+  .card h3{margin:0 0 8px 0}
+  .muted{color:var(--muted);font-size:14px}
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+  .gallery img{width:100%;height:220px;object-fit:cover;border-radius:12px;display:block;box-shadow:0 8px 20px rgba(0,0,0,0.35)}
+
+  /* footer */
+  footer{margin-top:28px;padding:18px;border-radius:12px;text-align:center;background:transparent;color:var(--muted)}
+
+  /* small screens */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr; }
+    .hero-right{order:2}
+    .grid-3{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr 1fr}
+  }
+
+  /* ========== 15 theme presets ========== */
+  /* Each theme updates CSS variables to create visually distinct, beautiful blue/ocean-forward styles. */
+  /* Default theme (1) is already set in :root above. */
+
+  /* Theme 2 - Tropical Bright */
+  .theme-2 { --bg: linear-gradient(180deg,#022a3a 0%, #072f45 60%); --card:#083248; --muted:#a9d6e8; --accent:#2bd0ff; --accent-2:#1363df; --glass: rgba(255,255,255,0.04); --text:#eafcff; }
+
+  /* Theme 3 - Deep Indigo */
+  .theme-3 { --bg: linear-gradient(180deg,#050017 0%, #0a2340 70%); --card:#0b2140; --muted:#98b4d6; --accent:#4a7bdc; --accent-2:#0b5fb0; --glass: rgba(255,255,255,0.03); --text:#eef6ff; }
+
+  /* Theme 4 - Sun-Kissed Coast */
+  .theme-4 { --bg: linear-gradient(180deg,#07293a 0%, #0b3b53 60%); --card:#0f4054; --muted:#f0e8d8; --accent:#ffb857; --accent-2:#0077c2; --text:#fffdf9; --glass: rgba(255,255,255,0.03); }
+
+  /* Theme 5 - Aquamarine Mist */
+  .theme-5 { --bg: linear-gradient(180deg,#062a2f 0%, #083a3f 60%); --card:#093b3f; --muted:#bfeaf0; --accent:#2bd6c8; --accent-2:#009e8d; --text:#e9fffe; }
+
+  /* Theme 6 - Classic Nautical */
+  .theme-6 { --bg: linear-gradient(180deg,#041a2b 0%, #062b45 70%); --card:#08283b; --muted:#d6e8f5; --accent:#e74c3c; --accent-2:#1aa7ff; --text:#fffdfd; }
+
+  /* Theme 7 - Sunset Bay */
+  .theme-7 { --bg: linear-gradient(180deg,#041524 0%, #0b2b3a 70%); --card:#0e2f3d; --muted:#ffd9b3; --accent:#ff6a3d; --accent-2:#176fb3; --text:#fff8f2; }
+
+  /* Theme 8 - Frosted Blue */
+  .theme-8 { --bg: linear-gradient(180deg,#0b2d3a 0%, #0f3f4f 70%); --card:#113244; --muted:#cfe9f7; --accent:#8ad8ff; --accent-2:#006bb6; --text:#eefcff; }
+
+  /* Theme 9 - Polished Teal */
+  .theme-9 { --bg: linear-gradient(180deg,#032a2f 0%, #073b41 70%); --card:#0c3a3e; --muted:#b7e8df; --accent:#00c2a8; --accent-2:#00695c; --text:#e9fffb; }
+
+  /* Theme 10 - Stormy Blue */
+  .theme-10 { --bg: linear-gradient(180deg,#020918 0%, #04142e 70%); --card:#091a2b; --muted:#9fb2c7; --accent:#6ca0ff; --accent-2:#003f89; --text:#eaf3ff; }
+
+  /* Theme 11 - Coral Reef */
+  .theme-11 { --bg: linear-gradient(180deg,#031824 0%, #0a3040 70%); --card:#0f3646; --muted:#ffd8d0; --accent:#ff7a66; --accent-2:#1a8cff; --text:#fff8f6; }
+
+  /* Theme 12 - Deep Emerald */
+  .theme-12 { --bg: linear-gradient(180deg,#021917 0%, #06312b 70%); --card:#083233; --muted:#bfead1; --accent:#00a884; --accent-2:#004b3b; --text:#eafff7; }
+
+  /* Theme 13 - Minimal Azure */
+  .theme-13 { --bg: linear-gradient(180deg,#063149 0%, #0a3e5a 65%); --card:#0b3f56; --muted:#cde6f6; --accent:#5bd1ff; --accent-2:#006fa8; --text:#f2fcff; }
+
+  /* Theme 14 - Vintage Harbor */
+  .theme-14 { --bg: linear-gradient(180deg,#041b1e 0%, #062a2c 70%); --card:#0d3332; --muted:#d7e6dd; --accent:#f0b66a; --accent-2:#1aa7ff; --text:#fbfbf7; }
+
+  /* Theme 15 - High Contrast Cyan */
+  .theme-15 { --bg: linear-gradient(180deg,#00121a 0%, #002b35 70%); --card:#02343b; --muted:#aeeff3; --accent:#00ffff; --accent-2:#0077ff; --text:#eaffff; }
+
+  /* Extra small tweaks for accents used in elements */
+  .accent { color:var(--accent) }
+  .accent-btn { background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
+
+</style>
+</head>
+<body class="theme-1">
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <!-- simple boat glyph -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 36c12 8 36 8 48 0l-6-12H14L8 36z" fill="white" opacity="0.95"/>
+            <path d="M32 10v14" stroke="rgba(255,255,255,0.95)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        Daot
+      </div>
+
+      <nav>
+        <a href="#about">About</a>
+        <a href="#styles">Styles</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#learn">Learn</a>
+        <div class="theme-control">
+          <label class="muted" for="theme">Theme</label>
+          <select id="theme" title="Choose site theme (1-15)">
+            <!-- 15 options -->
+            <option value="theme-1">Ocean Classic</option>
+            <option value="theme-2">Tropical Bright</option>
+            <option value="theme-3">Deep Indigo</option>
+            <option value="theme-4">Sun-Kissed</option>
+            <option value="theme-5">Aquamarine Mist</option>
+            <option value="theme-6">Classic Nautical</option>
+            <option value="theme-7">Sunset Bay</option>
+            <option value="theme-8">Frosted Blue</option>
+            <option value="theme-9">Polished Teal</option>
+            <option value="theme-10">Stormy Blue</option>
+            <option value="theme-11">Coral Reef</option>
+            <option value="theme-12">Deep Emerald</option>
+            <option value="theme-13">Minimal Azure</option>
+            <option value="theme-14">Vintage Harbor</option>
+            <option value="theme-15">High Contrast Cyan</option>
+          </select>
+        </div>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="about" aria-label="Introduction to Daot">
+      <div class="hero-left">
+        <h1>Daot — The Art & Science of Boats</h1>
+        <p class="lead">A curated space for boat lovers: close-up hull photography, design deep-dives, maintenance guides, and beautiful ocean-focused layouts. Explore 15 unique site styles to match your vibe.</p>
+        <div class="cta-row">
+          <button class="btn" onclick="scrollToSection('gallery')">View Gallery</button>
+          <button class="btn ghost" onclick="scrollToSection('styles')">Browse Styles</button>
+        </div>
+
+        <div style="margin-top:18px" class="muted">
+          <strong>Spotlight:</strong> Close-up hull details reveal hidden symmetry — paint texture, numbers, anchor chain marks and reflections form poetic compositions.
+        </div>
+      </div>
+
+      <aside class="hero-right">
+        <div class="hero-gallery" aria-hidden="false">
+          <!-- Replace images/boat1.jpg ... with real downloaded images -->
+          <img src="images/boat1.jpg" alt="Close-up boat hull with water reflections (replace with your photo)">
+          <img src="images/boat2.jpg" alt="Close-up colorful ropes and hull (replace with your photo)">
+          <img src="images/boat3.jpg" alt="Wooden boat close-up (replace with your photo)">
+          <img src="images/boat4.jpg" alt="Sail and rigging close-up at sunset (replace with your photo)">
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:6px">
+          <div class="muted">Real close-up photos — download from sources listed below to replace placeholders.</div>
+          <div>
+            <button class="btn" onclick="downloadStarter()">Download Starter</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Styles preview -->
+    <section id="styles" style="margin-top:22px">
+      <h2 style="margin:0 0 12px 0">15 Ready-Made Styles</h2>
+      <p class="muted" style="margin:0 0 16px 0">Use the theme dropdown to switch between carefully tuned color & texture combos — each preserves a polished blue/ocean core while feeling unique.</p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>Design System</h3>
+          <p class="muted">CSS variables + 15 themes. Clean glass panels, saturated ocean accents, and subtle shadows for depth.</p>
+        </div>
+
+        <div class="card">
+          <h3>Photography-Forward</h3>
+          <p class="muted">Large hero gallery and high-contrast image cards highlight real boat textures: rust, rope, hull keels, and varnished wood.</p>
+        </div>
+
+        <div class="card">
+          <h3>Content Blocks</h3>
+          <p class="muted">Articles, maintenance checklists, parts directory, and buyer guides — all styled for readability over ocean backdrops.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="gallery" aria-label="Photo gallery" style="margin-top:28px">
+      <!-- More placeholders; replace with licensed images from sources -->
+      <img src="images/boat5.jpg" alt="Boat closeup 5">
+      <img src="images/boat6.jpg" alt="Boat closeup 6">
+      <img src="images/boat1.jpg" alt="Boat closeup 1">
+      <img src="images/boat2.jpg" alt="Boat closeup 2">
+      <img src="images/boat3.jpg" alt="Boat closeup 3">
+      <img src="images/boat4.jpg" alt="Boat closeup 4">
+    </section>
+
+    <!-- Learning content -->
+    <section id="learn" style="margin-top:28px">
+      <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+        <article style="flex:1;min-width:300px" class="card">
+          <h3>Boat Anatomy — Close-Up Observations</h3>
+          <p class="muted">Understanding the hull, planking, keel, and stem lets you read a boat's history. Close-up photos show paint layers, waterlines, and load marks.</p>
+          <ul style="margin:12px 0 0 18px;color:var(--muted)">
+            <li><strong>Keel & stem</strong> — structural spine and bow shaping.</li>
+            <li><strong>Paint & antifouling</strong> — reveals maintenance cadence.</li>
+            <li><strong>Hardware</strong> — chain, cleats, and fittings show age and usage.</li>
+          </ul>
+        </article>
+
+        <aside style="width:320px" class="card">
+          <h3>Quick Tips</h3>
+          <p class="muted" style="margin-bottom:6px">How to photograph boat close-ups:</p>
+          <ol class="muted" style="margin:0 0 0 18px;padding:0">
+            <li>Use a macro or 50mm lens for texture.</li>
+            <li>Shoot golden hour for soft reflections.</li>
+            <li>Focus on geometry — numbers, rope lines, and portholes.</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <footer>
+      © Daot — crafted with ocean love • Photo credits listed below.
+    </footer>
+  </div>
+
+<script>
+  // theme switching
+  const sel = document.getElementById('theme');
+  sel.addEventListener('change', (e)=>{
+    document.body.className = '';
+    document.body.classList.add(e.target.value);
+  });
+
+  // keyboard quicker theme change: keys 1..9 then 0 for 10, q..y for others
+  window.addEventListener('keydown', (ev)=>{
+    const map = {
+      'Digit1': 'theme-1','Digit2':'theme-2','Digit3':'theme-3','Digit4':'theme-4','Digit5':'theme-5',
+      'Digit6':'theme-6','Digit7':'theme-7','Digit8':'theme-8','Digit9':'theme-9','Digit0':'theme-10',
+      'KeyQ':'theme-11','KeyW':'theme-12','KeyE':'theme-13','KeyR':'theme-14','KeyT':'theme-15'
+    };
+    if(map[ev.code]){
+      document.body.className = '';
+      document.body.classList.add(map[ev.code]);
+      // update select visually
+      const idx = Array.from(sel.options).findIndex(o=>o.value===map[ev.code]);
+      if(idx>=0) sel.selectedIndex = idx;
+    }
+  });
+
+  function scrollToSection(id){
+    document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function downloadStarter(){
+    alert('Place your chosen boat images into the "images/" folder beside this index.html, naming them boat1.jpg .. boat6.jpg. See image credits at the bottom for sources to download from.');
+  }
+</script>
+
+<!-- ========== Image credits & license notes (replace placeholders with downloaded images) ========== -->
+<!--
+  Recommended sample images (close-up, real boats). Download and place into images/:
+  1) Close-up hull with water reflections — Unsplash (free). 
+  2) Colorful close-up of boat hull with ropes & cables — FreeRangeStock (CC0). 
+  3) Blue wooden boat hull with porthole detail — PNGTree sample (check license) . 
+  4) Sail + rigging close-up at sunset — Unsplash (free). 
+
+  When using images from other sites: always check the license/attribution requirements before publishing.
+-->
+</body>
+</html>

@@ -1,317 +1,595 @@
-<!DOCTYPE html>
-<html lang="en" class="theme-coral-drift">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Daot — Boats, Beauty, and the Blue</title>
-  <meta name="description" content="Daot: a vibrant ocean-inspired website about boats—design, craft, stories, and close-up photography." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #051726;
-      --bg-alt: #07253a;
-      --text: #eaf6ff;
-      --muted: #b7d3ea;
-      --accent: #3cc1ff;
-      --accent-2: #69f0d2;
-      --highlight: #0b79d0;
-      --surface: rgba(255,255,255,0.06);
-      --card: rgba(6, 33, 52, 0.65);
-      --shadow: 0 30px 60px rgba(0,0,0,0.35);
-      --radius: 18px;
-      --grad-1: radial-gradient(1200px 600px at 10% 0%, rgba(60,193,255,0.15), transparent 60%),
-                radial-gradient(900px 500px at 90% 10%, rgba(105,240,210,0.12), transparent 60%),
-                linear-gradient(180deg, rgba(5,23,38,1), rgba(7,37,58,1));
-      --wave: conic-gradient(from 180deg at 50% 60%, rgba(60,193,255,0.25), rgba(105,240,210,0.2), rgba(16,105,173,0.2), transparent 60%);
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Daot — Boats & Ocean Design</title>
+<meta name="description" content="Daot — a beautiful ocean-first site about boats. Gallery, boat types, blog, guides, map, lightbox, audio, and more." />
+<style>
+  /* ---------- Base & variables (15 theme presets included) ---------- */
+  :root{
+    --bg: #071428;
+    --card: #0f2b45;
+    --muted: #9bb7cf;
+    --accent: #2aa7ff;
+    --accent-2: #0077c2;
+    --glass: rgba(255,255,255,0.06);
+    --text: #e8f6ff;
+    --radius: 12px;
+    --maxw: 1200px;
+    --nav-h: 64px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;
+    background: linear-gradient(180deg,var(--bg) 0%, #021026 60%);
+    color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.45;
+  }
+  .app{max-width:var(--maxw);margin:0 auto;padding:18px}
+  header{
+    height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:12px;
+    position:sticky;top:12px;z-index:60;
+    backdrop-filter: blur(6px);
+  }
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px}
+  .logo {
+    width:52px;height:52px;border-radius:12px;background:
+      linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;
+    box-shadow:0 8px 30px rgba(0,0,0,0.45);
+  }
+  .logo svg{width:36px;height:36px}
+  nav{display:flex;gap:10px;align-items:center}
+  nav a{color:var(--text);text-decoration:none;padding:8px 12px;border-radius:10px}
+  .muted{color:var(--muted)}
+  button.btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:10px 14px;border-radius:10px;border:none;color:#fff;font-weight:600;cursor:pointer}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+  /* theme control */
+  .theme-select{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px;border-radius:8px}
+  /* ---------- hero ---------- */
+  .hero{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:stretch;padding:22px;border-radius:14px;margin:18px 0;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);box-shadow:0 12px 40px rgba(0,0,0,0.45)}
+  .hero h1{margin:0;font-size:34px}
+  .hero .lead{color:var(--muted);margin:12px 0}
+  .hero-gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .hero-gallery img{width:100%;height:168px;object-fit:cover;border-radius:10px;display:block}
+  /* ---------- grid & cards ---------- */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:16px;border-radius:12px}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .gallery img{width:100%;height:220px;object-fit:cover;border-radius:12px;cursor:pointer}
+  /* ---------- boat types ---------- */
+  .types-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  .type-card{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:rgba(255,255,255,0.02)}
+  .type-card img{width:96px;height:72px;object-fit:cover;border-radius:8px}
+  /* ---------- carousel (boat of the week) ---------- */
+  .carousel{position:relative;border-radius:12px;overflow:hidden}
+  .carousel-slide{display:none;padding:16px;align-items:center;gap:18px}
+  .carousel-slide.active{display:flex}
+  .carousel img{width:420px;height:260px;object-fit:cover;border-radius:10px}
+  .carousel-controls{position:absolute;left:12px;right:12px;top:10px;display:flex;justify-content:space-between}
+  .dotbar{display:flex;gap:6px;align-items:center}
+  .dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.12)}
+  .dot.active{background:var(--accent)}
+  /* ---------- blog ---------- */
+  .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .post-card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+  /* ---------- maintenance interactive ---------- */
+  .checklist{display:flex;flex-direction:column;gap:8px}
+  .checklist label{display:flex;gap:12px;align-items:center;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
+  /* ---------- counters ---------- */
+  .counters{display:flex;gap:18px;align-items:center}
+  .counter{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:10px;text-align:center;min-width:120px}
+  .counter .num{font-size:22px;font-weight:700}
+  /* ---------- map ---------- */
+  .map-wrap{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:12px;display:flex;gap:12px;align-items:flex-start}
+  .world-map{width:100%;height:360px;border-radius:8px;background:linear-gradient(180deg,#022 0%, #014 100%);display:grid;place-items:center;color:var(--muted)}
+  /* ---------- testimonials ---------- */
+  .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .testimonial{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02)}
+  /* ---------- lightbox ---------- */
+  .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(1,8,16,0.85);z-index:1000}
+  .lightbox img{max-width:92%;max-height:86%;border-radius:8px}
+  .lightbox.show{display:flex}
+  /* ---------- mobile menu ---------- */
+  .hamburger{display:none;cursor:pointer;padding:8px;border-radius:8px}
+  .mobile-menu{position:fixed;left:-320px;top:0;bottom:0;width:320px;background:linear-gradient(180deg,#062b3a,#022);padding:18px;transition:left .32s;z-index:120}
+  .mobile-menu.open{left:0}
+  /* ---------- wallpapers page ---------- */
+  .wallpapers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .wp-card{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px}
+  .wp-card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+  /* ---------- loading screen ---------- */
+  .loader{position:fixed;inset:0;background:linear-gradient(180deg,#031233,#02141b);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column}
+  .wave{width:220px;height:80px;position:relative;overflow:hidden}
+  .boat-ship{position:absolute;left:50%;transform:translateX(-50%);bottom:8px;filter:drop-shadow(0 10px 30px rgba(0,0,0,0.6))}
+  /* ---------- responsive ---------- */
+  @media(max-width:980px){
+    .hero{grid-template-columns:1fr; }
+    .hero-gallery img{height:120px}
+    .grid-3{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr 1fr}
+    .types-grid{grid-template-columns:1fr}
+    .carousel img{width:100%;height:200px}
+    nav{display:none}
+    .hamburger{display:block}
+    .posts{grid-template-columns:1fr}
+    .testimonials{grid-template-columns:1fr}
+    .wallpapers{grid-template-columns:repeat(2,1fr)}
+  }
 
-    /* Base reset & layout */
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      color: var(--text);
-      background: var(--grad-1);
-      background-attachment: fixed;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* Ocean hero */
-    .hero {
-      position: relative;
-      padding: 96px 24px;
-      overflow: clip;
-      background:
-        radial-gradient(60% 120% at 20% 10%, rgba(255,255,255,0.06), transparent 40%),
-        var(--wave),
-        var(--grad-1);
-    }
-    .shell { max-width: 1200px; margin: 0 auto; }
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; margin-bottom: 48px;
-    }
-    .brand {
-      display: flex; align-items: center; gap: 14px; font-weight: 800; letter-spacing: 0.5px;
-    }
-    .brand-badge {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: var(--shadow);
-    }
-    .nav a { padding: 10px 14px; background: var(--surface); border-radius: 10px; }
-    .nav .cta { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #042033; font-weight: 700; }
-    .title {
-      font-family: "Playfair Display", serif; font-weight: 600; font-size: 64px; line-height: 1.05; margin: 0;
-      text-shadow: 0 6px 30px rgba(60,193,255,0.25);
-    }
-    .subtitle {
-      max-width: 800px; font-size: 18px; color: var(--muted); margin: 18px 0 28px;
-    }
-    .hero-card {
-      margin-top: 24px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px;
-    }
-    .card {
-      background: var(--card); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow);
-      position: relative; overflow: hidden;
-    }
-    .wave-mask::before {
-      content: ""; position: absolute; inset: -10% -10% auto -10%;
-      height: 70%; background: radial-gradient(600px 300px at 40% 60%, rgba(60,193,255,0.15), transparent 60%);
-      mix-blend-mode: screen; filter: blur(30px);
-    }
-
-    /* Gallery */
-    .section { padding: 60px 24px; }
-    .section h2 { margin: 0 0 14px; font-weight: 800; letter-spacing: 0.3px; }
-    .section p { color: var(--muted); margin: 0 0 24px; }
-    .grid {
-      display: grid; gap: 18px; grid-template-columns: repeat(12, 1fr);
-    }
-    .col-4 { grid-column: span 4; }
-    .col-6 { grid-column: span 6; }
-    .col-8 { grid-column: span 8; }
-    @media (max-width: 900px) {
-      .hero-card { grid-template-columns: 1fr; }
-      .col-8, .col-6, .col-4 { grid-column: span 12; }
-    }
-    .img-card {
-      border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.04); position: relative;
-    }
-    .img-card img { width: 100%; height: 280px; object-fit: cover; display: block; }
-    .img-caption {
-      position: absolute; left: 12px; bottom: 10px; right: 12px;
-      background: rgba(5, 23, 38, 0.6); backdrop-filter: blur(4px);
-      border-radius: 10px; padding: 10px 12px; font-size: 14px; color: var(--text);
-    }
-
-    /* Story cards */
-    .story {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-    }
-    @media (max-width: 900px) { .story { grid-template-columns: 1fr; } }
-    .chip {
-      display: inline-flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 999px;
-      background: rgba(105,240,210,0.15); color: var(--accent-2); font-weight: 700; font-size: 12px;
-      border: 1px solid rgba(105,240,210,0.35);
-    }
-
-    /* Theme switcher */
-    .themes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 18px; }
-    .theme-btn {
-      border: 0; border-radius: 12px; padding: 10px; cursor: pointer; color: #042033; font-weight: 700;
-      box-shadow: var(--shadow);
-    }
-
-    /* Footer */
-    footer { padding: 40px 24px; color: var(--muted); }
-    footer .foot-grid { display: grid; gap: 24px; grid-template-columns: 1.2fr 0.8fr; }
-    @media (max-width: 900px) { footer .foot-grid { grid-template-columns: 1fr; } }
-
-    /* 15 Themes — blue-forward, each unique */
-    .theme-coral-drift { --accent:#3cc1ff; --accent-2:#ff7c9e; --highlight:#0b79d0; --bg:#04182a; --bg-alt:#07253a; }
-    .theme-abyssal { --accent:#5ec7ff; --accent-2:#34b3a0; --highlight:#0a66ad; --bg:#031321; --bg-alt:#072036; }
-    .theme-sapphire-swell { --accent:#6aa8ff; --accent-2:#74f0f0; --highlight:#1454c5; --bg:#061433; --bg-alt:#0a224d; }
-    .theme-lagoon { --accent:#56e0d5; --accent-2:#70b7ff; --highlight:#12779e; --bg:#02201f; --bg-alt:#053a3a; }
-    .theme-midnight-regatta { --accent:#7cc6ff; --accent-2:#9af0cf; --highlight:#165d9a; --bg:#020c19; --bg-alt:#071b33; }
-    .theme-poseidon { --accent:#48b0ff; --accent-2:#ffd66e; --highlight:#0f75b3; --bg:#031427; --bg-alt:#0b2238; }
-    .theme-glacier-brine { --accent:#9de2ff; --accent-2:#4de6c2; --highlight:#2f82c8; --bg:#0a1828; --bg-alt:#102339; }
-    .theme-tropic-deep { --accent:#4bd6ff; --accent-2:#ff9f6e; --highlight:#0e7cb5; --bg:#081a2d; --bg-alt:#132a40; }
-    .theme-starfish { --accent:#74c9ff; --accent-2:#ff6ea8; --highlight:#125aa4; --bg:#07172b; --bg-alt:#0c2340; }
-    .theme-celestial-blue { --accent:#8fd3ff; --accent-2:#a1f0e6; --highlight:#3a7fdc; --bg:#0b1730; --bg-alt:#142545; }
-    .theme-mariner { --accent:#4bb1ff; --accent-2:#7ae58d; --highlight:#1467b4; --bg:#061b2f; --bg-alt:#0c2a45; }
-    .theme-reefline { --accent:#5fe0ff; --accent-2:#ffa36e; --highlight:#0e74b8; --bg:#041c27; --bg-alt:#0a2f40; }
-    .theme-fjord { --accent:#78bfff; --accent-2:#5ff1c7; --highlight:#1e6bc7; --bg:#0d1a28; --bg-alt:#132839; }
-    .theme-seafoam { --accent:#8af0ff; --accent-2:#65ffb1; --highlight:#0e78a8; --bg:#0a2029; --bg-alt:#11303b; }
-    .theme-harbor-glow { --accent:#5fcfff; --accent-2:#ffd16e; --highlight:#2a74c1; --bg:#081a2b; --bg-alt:#112945; }
-
-    /* Theme buttons get mini gradients */
-    .theme-coral-drift .theme-coral-drift-btn,
-    .theme-abyssal .theme-abyssal-btn,
-    .theme-sapphire-swell .theme-sapphire-swell-btn,
-    .theme-lagoon .theme-lagoon-btn,
-    .theme-midnight-regatta .theme-midnight-regatta-btn,
-    .theme-poseidon .theme-poseidon-btn,
-    .theme-glacier-brine .theme-glacier-brine-btn,
-    .theme-tropic-deep .theme-tropic-deep-btn,
-    .theme-starfish .theme-starfish-btn,
-    .theme-celestial-blue .theme-celestial-blue-btn,
-    .theme-mariner .theme-mariner-btn,
-    .theme-reefline .theme-reefline-btn,
-    .theme-fjord .theme-fjord-btn,
-    .theme-seafoam .theme-seafoam-btn,
-    .theme-harbor-glow .theme-harbor-glow-btn {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    }
-  </style>
+  /* ---------- 15 theme presets (concise set) ---------- */
+  .theme-1{--bg:linear-gradient(180deg,#071428 0%,#021026 60%);--card:#0f2b45;--muted:#9bb7cf;--accent:#2aa7ff;--accent-2:#0077c2;--text:#e8f6ff;}
+  .theme-2{--bg:linear-gradient(180deg,#022a3a 0%,#072f45 60%);--accent:#2bd0ff;--accent-2:#1363df;--muted:#a9d6e8;}
+  .theme-3{--bg:linear-gradient(180deg,#050017 0%,#0a2340 70%);--accent:#4a7bdc;--accent-2:#0b5fb0;}
+  .theme-4{--bg:linear-gradient(180deg,#07293a 0%,#0b3b53 60%);--accent:#ffb857;--accent-2:#0077c2;--muted:#f0e8d8;}
+  .theme-5{--bg:linear-gradient(180deg,#062a2f 0%,#083a3f 60%);--accent:#2bd6c8;--accent-2:#009e8d;}
+  .theme-6{--bg:linear-gradient(180deg,#041a2b 0%,#062b45 70%);--accent:#e74c3c;--accent-2:#1aa7ff;}
+  .theme-7{--bg:linear-gradient(180deg,#041524 0%,#0b2b3a 70%);--accent:#ff6a3d;--accent-2:#176fb3;--muted:#ffd9b3;}
+  .theme-8{--bg:linear-gradient(180deg,#0b2d3a 0%,#0f3f4f 70%);--accent:#8ad8ff;--accent-2:#006bb6;}
+  .theme-9{--bg:linear-gradient(180deg,#032a2f 0%,#073b41 70%);--accent:#00c2a8;--accent-2:#00695c;}
+  .theme-10{--bg:linear-gradient(180deg,#020918 0%,#04142e 70%);--accent:#6ca0ff;--accent-2:#003f89;}
+  .theme-11{--bg:linear-gradient(180deg,#031824 0%,#0a3040 70%);--accent:#ff7a66;--accent-2:#1a8cff;}
+  .theme-12{--bg:linear-gradient(180deg,#021917 0%,#06312b 70%);--accent:#00a884;--accent-2:#004b3b;}
+  .theme-13{--bg:linear-gradient(180deg,#063149 0%,#0a3e5a 65%);--accent:#5bd1ff;--accent-2:#006fa8;}
+  .theme-14{--bg:linear-gradient(180deg,#041b1e 0%,#062a2c 70%);--accent:#f0b66a;--accent-2:#1aa7ff;}
+  .theme-15{--bg:linear-gradient(180deg,#00121a 0%,#002b35 70%);--accent:#00ffff;--accent-2:#0077ff;}
+  /* apply bg to body */
+  body.theme-1,body.theme-2,body.theme-3,body.theme-4,body.theme-5,body.theme-6,
+  body.theme-7,body.theme-8,body.theme-9,body.theme-10,body.theme-11,body.theme-12,
+  body.theme-13,body.theme-14,body.theme-15{background:var(--bg);color:var(--text)}
+</style>
 </head>
-<body>
-  <header class="hero">
-    <div class="shell">
-      <nav class="nav">
-        <div class="brand">
-          <div class="brand-badge" aria-hidden="true"></div>
-          <span>Daot</span>
+<body class="theme-1">
+  <!-- LOADER -->
+  <div id="loader" class="loader" aria-hidden="false">
+    <div style="text-align:center;color:var(--muted);margin-bottom:12px">Daot — Loading the ocean...</div>
+    <div class="wave" aria-hidden="true">
+      <svg viewBox="0 0 600 120" preserveAspectRatio="none" width="100%" height="100%">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#024" stop-opacity="0.8"/><stop offset="1" stop-color="#016" stop-opacity="0.9"/></linearGradient>
+        </defs>
+        <path d="M0 40 C150 80 350 0 600 40 L600 120 L0 120 Z" fill="url(#g)">
+          <animate attributeName="d" dur="4s" repeatCount="indefinite" values="
+            M0 40 C150 80 350 0 600 40 L600 120 L0 120 Z;
+            M0 50 C150 20 350 90 600 50 L600 120 L0 120 Z;
+            M0 40 C150 80 350 0 600 40 L600 120 L0 120 Z" />
+        </path>
+      </svg>
+    </div>
+    <svg class="boat-ship" viewBox="0 0 64 64" width="120" height="60" aria-hidden="true">
+      <g fill="#fff" opacity="0.95"><path d="M6 38c12 8 36 8 52 0l-6-12H12L6 38z"/><path d="M32 10v14" stroke="#fff" stroke-width="2"/></g>
+    </svg>
+  </div>
+
+  <div class="app" id="app" style="opacity:0;transition:opacity .28s;">
+    <!-- HEADER -->
+    <header>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="logo" title="Daot logo">
+          <!-- small boat glyph -->
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 36c12 8 36 8 48 0l-6-12H14L8 36z" fill="white" opacity="0.95"/>
+            <path d="M32 10v14" stroke="rgba(255,255,255,0.95)" stroke-width="3" stroke-linecap="round"/>
+          </svg>
         </div>
-        <div class="nav-links">
-          <a href="#stories">Stories</a>
-          <a href="#gallery">Gallery</a>
-          <a class="cta" href="#themes">Switch Style</a>
+        <div style="display:flex;flex-direction:column">
+          <div style="font-weight:800">Daot</div>
+          <div class="muted" style="font-size:12px;margin-top:2px">Boats • Close-ups • Ocean design</div>
         </div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#types">Boat Types</a>
+        <a href="#botw">Boat of the Week</a>
+        <a href="#blog">Blog</a>
+        <a href="#learn">Guides</a>
+        <a href="#map">Map</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#wallpapers">Wallpapers</a>
       </nav>
 
-      <h1 class="title">Boats, up close — where craft meets ocean light.</h1>
-      <p class="subtitle">Daot celebrates boats through vivid design, seaworthy stories, and real-life close-up photography. Explore the textures of hulls, the geometry of rigging, and the blues that stitch the world together.</p>
+      <div style="display:flex;gap:10px;align-items:center">
+        <select id="theme" class="theme-select" title="Theme switcher">
+          <option value="theme-1">Ocean Classic</option><option value="theme-2">Tropical Bright</option>
+          <option value="theme-3">Deep Indigo</option><option value="theme-4">Sun-Kissed</option>
+          <option value="theme-5">Aquamarine Mist</option><option value="theme-6">Classic Nautical</option>
+          <option value="theme-7">Sunset Bay</option><option value="theme-8">Frosted Blue</option>
+          <option value="theme-9">Polished Teal</option><option value="theme-10">Stormy Blue</option>
+          <option value="theme-11">Coral Reef</option><option value="theme-12">Deep Emerald</option>
+          <option value="theme-13">Minimal Azure</option><option value="theme-14">Vintage Harbor</option>
+          <option value="theme-15">High Contrast Cyan</option>
+        </select>
 
-      <div class="hero-card">
-        <section class="card wave-mask">
-          <h3 style="margin-top:0">What is Daot?</h3>
-          <p>Daot is a colorful, blue-hued showcase about boats—design, engineering, and life on water. It’s crafted to feel official, modern, and uniquely beautiful.</p>
-          <div class="chip">Ocean-first • Blue-forward</div>
-          <p style="margin-top:12px">Switch between 15 distinct styles to see the ocean’s mood: from lagoon calm to harbor glow.</p>
-        </section>
-        <section class="card">
-          <h3 style="margin-top:0">Close-up photography</h3>
-          <p>We feature macro and tight-frame boat images—rivets, teak grain, cleats, bow lines, and spray—curated from licensed sources and free libraries for clarity and legality.</p>
-          <div class="chip">Curated • Licensed</div>
-        </section>
+        <button class="btn" id="soundToggle" title="Toggle ambient sound">🔊 Sound</button>
+        <div class="hamburger" id="hamb" title="Open menu">☰</div>
       </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div style="display:flex;gap:10px;align-items:center"><div class="logo" style="width:46px;height:46px"></div><strong>Daot</strong></div>
+        <button onclick="toggleMobileMenu()" class="ghost">Close</button>
+      </div>
+      <nav style="display:flex;flex-direction:column;gap:8px">
+        <a href="#about" onclick="toggleMobileMenu()">About</a>
+        <a href="#types" onclick="toggleMobileMenu()">Boat Types</a>
+        <a href="#botw" onclick="toggleMobileMenu()">Boat of the Week</a>
+        <a href="#blog" onclick="toggleMobileMenu()">Blog</a>
+        <a href="#learn" onclick="toggleMobileMenu()">Guides</a>
+        <a href="#map" onclick="toggleMobileMenu()">Map</a>
+        <a href="#gallery" onclick="toggleMobileMenu()">Gallery</a>
+        <a href="#wallpapers" onclick="toggleMobileMenu()">Wallpapers</a>
+      </nav>
+      <div style="margin-top:18px"><small class="muted">Theme</small><br/><select id="themeMobile" class="theme-select" style="margin-top:8px"></select></div>
     </div>
-  </header>
 
-  <main>
-    <section id="stories" class="section shell">
-      <h2>Boat craft and ocean design</h2>
-      <p>From hull forms to sail plans, boats are geometry set against moving water. We explore how materials, balance, and purpose shape everything—from racing yachts to working bancas.</p>
-
-      <div class="story">
-        <article class="card">
-          <h3 style="margin-top:0">Form and function</h3>
-          <p>Hull curvature affects stability and speed. Close-ups reveal the truth: laminates, seams, fasteners, and finishes. Beauty emerges from precision.</p>
-        </article>
-        <article class="card">
-          <h3 style="margin-top:0">Life aboard</h3>
-          <p>Details make the day—cleats, winches, knotted lines. The ocean’s palette—sapphire, teal, and foam—guides Daot’s design language throughout.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="gallery" class="section shell">
-      <h2>Close-up boat gallery</h2>
-      <p>Replace the sample images with your licensed boat close-ups. Keep alt text descriptive and add credits below.</p>
-
-      <div class="grid">
-        <div class="img-card col-8">
-          <img src="assets/images/bow-detail.webp" alt="Close-up of yacht bow cutting through light chop" />
-          <div class="img-caption">Bow lines and spray geometry — speed meets symmetry.</div>
-        </div>
-        <div class="img-card col-4">
-          <img src="assets/images/teak-deck.webp" alt="Teak deck planks with stainless cleat in sunlight" />
-          <div class="img-caption">Teak, steel, sun — the working beauty of a deck.</div>
-        </div>
-        <div class="img-card col-6">
-          <img src="assets/images/cleat-knot.webp" alt="Close-up of mooring line tied to a cleat" />
-          <div class="img-caption">A good knot: grace in reliability.</div>
-        </div>
-        <div class="img-card col-6">
-          <img src="assets/images/hull-rivets.webp" alt="Macro shot of painted hull with visible rivets and texture" />
-          <div class="img-caption">Rivets and paint: craft in the details.</div>
-        </div>
-        <div class="img-card col-4">
-          <img src="assets/images/winch.webp" alt="Polished winch with wrapped line" />
-          <div class="img-caption">Mechanical shine, human hands.</div>
-        </div>
-        <div class="img-card col-8">
-          <img src="assets/images/outrigger-banca.webp" alt="Philippine banca outrigger detail with blue water" />
-          <div class="img-caption">Outrigger grace on local waters.</div>
-        </div>
-      </div>
-
-      <blockquote>Tip: Use WebP images and lazy-loading (<img loading="lazy">) for faster page loads on mobile.</blockquote>
-    </section>
-
-    <section id="themes" class="section shell">
-      <h2>Switch style — 15 ocean-inspired themes</h2>
-      <p>Each theme keeps the blue hue at heart, while adding unique warmth or coolness through accent color and light gradients.</p>
-
-      <div class="themes">
-        <button class="theme-btn theme-coral-drift-btn" data-theme="theme-coral-drift">Coral Drift</button>
-        <button class="theme-btn theme-abyssal-btn" data-theme="theme-abyssal">Abyssal</button>
-        <button class="theme-btn theme-sapphire-swell-btn" data-theme="theme-sapphire-swell">Sapphire Swell</button>
-        <button class="theme-btn theme-lagoon-btn" data-theme="theme-lagoon">Lagoon</button>
-        <button class="theme-btn theme-midnight-regatta-btn" data-theme="theme-midnight-regatta">Midnight Regatta</button>
-        <button class="theme-btn theme-poseidon-btn" data-theme="theme-poseidon">Poseidon</button>
-        <button class="theme-btn theme-glacier-brine-btn" data-theme="theme-glacier-brine">Glacier Brine</button>
-        <button class="theme-btn theme-tropic-deep-btn" data-theme="theme-tropic-deep">Tropic Deep</button>
-        <button class="theme-btn theme-starfish-btn" data-theme="theme-starfish">Starfish</button>
-        <button class="theme-btn theme-celestial-blue-btn" data-theme="theme-celestial-blue">Celestial Blue</button>
-        <button class="theme-btn theme-mariner-btn" data-theme="theme-mariner">Mariner</button>
-        <button class="theme-btn theme-reefline-btn" data-theme="theme-reefline">Reefline</button>
-        <button class="theme-btn theme-fjord-btn" data-theme="theme-fjord">Fjord</button>
-        <button class="theme-btn theme-seafoam-btn" data-theme="theme-seafoam">Seafoam</button>
-        <button class="theme-btn theme-harbor-glow-btn" data-theme="theme-harbor-glow">Harbor Glow</button>
-      </div>
-    </section>
-  </main>
-
-  <footer class="shell">
-    <div class="foot-grid">
+    <!-- HERO -->
+    <section id="about" class="hero" aria-label="About Daot">
       <div>
-        <h3 style="margin-top:0">Credits & licensing</h3>
-        <p>Replace sample filenames with your images. List photographers and sources here along with license type. Keep proof of licenses on file.</p>
-        <ul>
-          <li><strong>Source:</strong> Getty Images — licensed close-up boat photography</li>
-          <li><strong>Source:</strong> Shutterstock — royalty-free close-up boat images</li>
-          <li><strong>Source:</strong> Pixabay — free images (check terms for attribution)</li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="margin-top:0">About Daot</h3>
-        <p>Built for ocean lovers, shipwrights, and casual dreamers. The sea is a moodboard and a mirror—Daot keeps it vivid.</p>
-      </div>
-    </div>
-    <p style="margin-top:24px">© Daot. All rights reserved.</p>
-  </footer>
+        <h1>Daot — The Art, Design & Close-Ups of Boats</h1>
+        <p class="lead">High-quality close-up photography, deep-dive articles, interactive guides, and 15 beautiful blue-themed styles to showcase boats in all their textures and colors.</p>
+        <div style="display:flex;gap:10px;margin-bottom:12px">
+          <button class="btn" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">View Gallery</button>
+          <button class="ghost" onclick="document.getElementById('types').scrollIntoView({behavior:'smooth'})">Explore Boat Types</button>
+        </div>
 
-  <script>
-    // Theme switcher
-    document.querySelectorAll(".theme-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const theme = btn.dataset.theme;
-        document.documentElement.className = theme;
-        // Persist choice
-        localStorage.setItem("daot-theme", theme);
-      });
-    });
-    // Restore theme on load
-    const saved = localStorage.getItem("daot-theme");
-    if (saved) document.documentElement.className = saved;
-  </script>
-</body>
-</html>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Photography-first</h3>
+            <p class="muted">Large, textured images—focus on hull detail, varnish, ropes, and anchors.</p>
+          </div>
+          <div class="card">
+            <h3>Guides & Tutorials</h3>
+            <p class="muted">Interactive maintenance checklist, how-to photography tips, and parts glossary.</p>
+          </div>
+          <div class="card">
+            <h3>Map & Stories</h3>
+            <p class="muted">Discover ports, famous harbors, and regional boatcraft traditions via an interactive map.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="hero-gallery">
+          <!-- replace these placeholders with your images in images/ -->
+          <img src="images/boat1.jpg" alt="Boat hull close-up (replace)">
+          <img src="images/boat2.jpg" alt="Boat rope detail (replace)">
+          <img src="images/boat3.jpg" alt="Wooden boat close-up (replace)">
+          <img src="images/boat4.jpg" alt="Sail and rigging (replace)">
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:10px;align-items:center">
+          <div class="muted">Replace hero images with licensed close-ups in /images/</div>
+          <div><button class="btn" onclick="downloadStarter()">Starter ZIP</button></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- BOAT TYPES -->
+    <section id="types" style="margin-top:18px">
+      <h2>Boat Types Directory</h2>
+      <p class="muted">A curated catalog of popular boat types with short descriptions.</p>
+      <div class="types-grid" id="typesGrid">
+        <!-- each card generated by JS; placeholders below -->
+        <div class="type-card"><img src="images/type-sail.jpg" alt=""><div><strong>Sailboat</strong><div class="muted">Elegant, wind-powered hulls for cruising and racing.</div></div></div>
+        <div class="type-card"><img src="images/type-speed.jpg" alt=""><div><strong>Speedboat</strong><div class="muted">High-performance craft for day trips and watersports.</div></div></div>
+        <div class="type-card"><img src="images/type-cata.jpg" alt=""><div><strong>Catamaran</strong><div class="muted">Stable dual-hull designs for comfort and space.</div></div></div>
+        <div class="type-card"><img src="images/type-fish.jpg" alt=""><div><strong>Fishing Boat</strong><div class="muted">Workhorse boats optimized for nets, traps, and deck space.</div></div></div>
+        <div class="type-card"><img src="images/type-yacht.jpg" alt=""><div><strong>Luxury Yacht</strong><div class="muted">High-end amenities and elegant lines.</div></div></div>
+        <div class="type-card"><img src="images/type-row.jpg" alt=""><div><strong>Rowboat</strong><div class="muted">Simple, human-powered craft for lakes and calm waters.</div></div></div>
+      </div>
+    </section>
+
+    <!-- BOAT OF THE WEEK -->
+    <section id="botw" style="margin-top:18px">
+      <h2>Boat of the Week</h2>
+      <div class="carousel card" id="carousel">
+        <div class="carousel-controls">
+          <div class="muted">Featured</div>
+          <div class="dotbar" id="dots"></div>
+        </div>
+
+        <div class="carousel-slide active" data-title="Classic Cutter">
+          <img src="images/botw1.jpg" alt="Boat of the week 1">
+          <div>
+            <h3>Classic Cutter</h3>
+            <p class="muted">A beautifully proportioned cutter with varnished wood rails, timeless lines, and vintage fittings.</p>
+            <ul class="muted">
+              <li>Length: 36 ft</li>
+              <li>Year built: 1983</li>
+              <li>Notes: Recent refit, new antifouling</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="carousel-slide" data-title="Modern Cat">
+          <img src="images/botw2.jpg" alt="Boat of the week 2">
+          <div>
+            <h3>Modern Catamaran</h3>
+            <p class="muted">Expansive deck plan, twin hull efficiency, ideal for bluewater cruising.</p>
+            <ul class="muted"><li>Length: 44 ft</li><li>Year: 2018</li></ul>
+          </div>
+        </div>
+
+        <div class="carousel-slide" data-title="Sport Cruiser">
+          <img src="images/botw3.jpg" alt="Boat of the week 3">
+          <div>
+            <h3>Sport Cruiser</h3>
+            <p class="muted">Sleek lines and powerful engines. Close-up shows layered paint & hardware.</p>
+            <ul class="muted"><li>Length: 28 ft</li><li>Year: 2020</li></ul>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;padding:12px;justify-content:center">
+          <button class="ghost" onclick="prevSlide()">Prev</button>
+          <button class="btn" onclick="nextSlide()">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" style="margin-top:18px">
+      <h2>Latest Posts</h2>
+      <div class="posts">
+        <article class="post-card card">
+          <img src="images/post1.jpg" alt="">
+          <h3>Why Boat Hull Shapes Matter</h3>
+          <p class="muted">A close look at hydrodynamics and how shape affects speed and comfort.</p>
+        </article>
+        <article class="post-card card">
+          <img src="images/post2.jpg" alt="">
+          <h3>Knots That Save Your Day</h3>
+          <p class="muted">Essential knots every boater should master — with close-up photos.</p>
+        </article>
+        <article class="post-card card">
+          <img src="images/post3.jpg" alt="">
+          <h3>5 Close-Up Boat Photography Tips</h3>
+          <p class="muted">Lighting, lenses, and angles for capturing hull texture and detail.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- LEARNING / MAINTENANCE -->
+    <section id="learn" style="margin-top:18px">
+      <h2>Maintenance Guide (Interactive)</h2>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <article class="card" style="flex:1;min-width:320px">
+          <h3>Checklist</h3>
+          <div class="checklist" id="checklist">
+            <label><input type="checkbox" data-key="hull"> Inspect hull for osmosis / blisters</label>
+            <label><input type="checkbox" data-key="antifouling"> Check antifouling and repaint if needed</label>
+            <label><input type="checkbox" data-key="engine"> Engine oil & filter change</label>
+            <label><input type="checkbox" data-key="battery"> Battery and electrical system check</label>
+            <label><input type="checkbox" data-key="rigging"> Inspect standing & running rigging</label>
+          </div>
+          <div style="margin-top:10px"><button class="btn" onclick="saveChecklist()">Save Checklist</button> <button class="ghost" onclick="clearChecklist()">Clear</button></div>
+        </article>
+
+        <aside class="card" style="width:320px">
+          <h3>Quick Tips</h3>
+          <ul class="muted">
+            <li>Rinse with fresh water after salt exposure</li>
+            <li>Inspect through-hulls annually</li>
+            <li>Store lines out of direct sunlight</li>
+          </ul>
+        </aside>
+      </div>
+
+      <div style="margin-top:14px" class="card">
+        <h3>Parts Glossary</h3>
+        <p class="muted">Keel, stem, rub rail, pulpits, cleats — quick definitions with close-up imagery.</p>
+      </div>
+    </section>
+
+    <!-- OCEAN FACTS -->
+    <section style="margin-top:18px">
+      <h2>Ocean Facts</h2>
+      <div class="counters">
+        <div class="counter card"><div class="num" data-target="2000">0</div><div class="muted">Boat Types</div></div>
+        <div class="counter card"><div class="num" data-target="71">0</div><div class="muted">% Earth is water</div></div>
+        <div class="counter card"><div class="num" data-target="96">0</div><div class="muted">% Trade by sea</div></div>
+        <div class="counter card"><div class="num" data-target="14">0</div><div class="muted">Avg days at sea</div></div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE MAP -->
+    <section id="map" style="margin-top:18px">
+      <h2>Interactive Map — Famous Ports & Harbors</h2>
+      <div class="map-wrap">
+        <div class="world-map card" id="worldMap" aria-hidden="false">
+          <!-- Simple SVG world map placeholder; clickable "ports" -->
+          <svg viewBox="0 0 800 360" width="100%" height="100%" id="svgMap" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive map">
+            <rect width="100%" height="100%" fill="transparent"/>
+            <!-- Ports -->
+            <circle cx="600" cy="130" r="6" fill="#ffdd57" class="port" data-name="Sydney, Australia"/>
+            <circle cx="700" cy="80" r="6" fill="#ffdd57" class="port" data-name="Tokyo, Japan"/>
+            <circle cx="440" cy="160" r="6" fill="#ffdd57" class="port" data-name="San Francisco, USA"/>
+            <circle cx="400" cy="200" r="6" fill="#ffdd57" class="port" data-name="Panama Canal"/>
+            <circle cx="260" cy="140" r="6" fill="#ffdd57" class="port" data-name="Valencia, Spain"/>
+            <text x="20" y="320" class="muted" font-size="12">Click a dot to learn more about that port.</text>
+          </svg>
+        </div>
+        <div style="width:320px">
+          <div id="portInfo" class="card"><strong>Select a port</strong><p class="muted" id="portDesc">Click a yellow dot on the map to see notes.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" style="margin-top:18px">
+      <h2>Photo Gallery</h2>
+      <p class="muted">Click any image to open the lightbox for full-screen viewing.</p>
+      <div class="gallery card" id="galleryGrid">
+        <!-- placeholders; replace images in /images/ -->
+        <img src="images/boat1.jpg" alt="gallery1" data-index="0">
+        <img src="images/boat2.jpg" alt="gallery2" data-index="1">
+        <img src="images/boat3.jpg" alt="gallery3" data-index="2">
+        <img src="images/boat4.jpg" alt="gallery4" data-index="3">
+        <img src="images/boat5.jpg" alt="gallery5" data-index="4">
+        <img src="images/boat6.jpg" alt="gallery6" data-index="5">
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section style="margin-top:18px">
+      <h2>Testimonials</h2>
+      <div class="testimonials" id="testimonials">
+        <div class="testimonial card"><strong>“Daot is beautiful.”</strong><div class="muted" style="margin-top:8px">— Captain Reyes, Cebu</div></div>
+        <div class="testimonial card"><strong>“I learned how to photograph hulls.”</strong><div class="muted" style="margin-top:8px">— Mariel, Photographer</div></div>
+        <div class="testimonial card"><strong>“The maintenance guide saved me time.”</strong><div class="muted" style="margin-top:8px">— Jonas, Boat owner</div></div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section style="margin-top:18px" id="newsletter">
+      <h2>Join the Daot Newsletter</h2>
+      <p class="muted">Get weekly boat close-ups and design tips. (Front-end only demo)</p>
+      <div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <input id="nlName" placeholder="Your name" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);min-width:220px">
+        <input id="nlEmail" placeholder="Email address" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);min-width:260px">
+        <select id="nlBoat" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06)">
+          <option>Sailboat</option><option>Speedboat</option><option>Yacht</option><option>Fishing</option>
+        </select>
+        <button class="btn" onclick="subscribeDemo()">Subscribe</button>
+      </div>
+      <div id="nlMsg" class="muted" style="margin-top:8px"></div>
+    </section>
+
+    <!-- WALLPAPERS -->
+    <section id="wallpapers" style="margin-top:18px">
+      <h2>Daot Premium Wallpapers (Free)</h2>
+      <p class="muted">High-resolution boat close-ups. Drop your licensed images into /wallpapers/ or link them.</p>
+      <div class="wallpapers" id="wpGrid">
+        <div class="wp-card card"><img src="images/wp1.jpg" alt=""><div style="margin-top:8px"><button class="btn" onclick="downloadPlaceholder('wallpapers/wp1.jpg')">Download</button></div></div>
+        <div class="wp-card card"><img src="images/wp2.jpg" alt=""><div style="margin-top:8px"><button class="btn" onclick="downloadPlaceholder('wallpapers/wp2.jpg')">Download</button></div></div>
+        <div class="wp-card card"><img src="images/wp3.jpg" alt=""><div style="margin-top:8px"><button class="btn" onclick="downloadPlaceholder('wallpapers/wp3.jpg')">Download</button></div></div>
+        <div class="wp-card card"><img src="images/wp4.jpg" alt=""><div style="margin-top:8px"><button class="btn" onclick="downloadPlaceholder('wallpapers/wp4.jpg')">Download</button></div></div>
+      </div>
+    </section>
+
+    <!-- LOGO PACK (inline SVGs; right-click save as) -->
+    <section style="margin-top:18px">
+      <h2>Daot Logo Pack</h2>
+      <p class="muted">Right-click any logo and "Save as..." to export. SVGs are inline for crisp scaling.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <!-- Primary emblem -->
+        <div class="card" style="padding:12px;text-align:center">
+          <svg viewBox="0 0 64 64" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="lg1" x1="0" x2="1"><stop offset="0" stop-color="#2aa7ff"/><stop offset="1" stop-color="#0077c2"/></linearGradient></defs>
+            <rect rx="10" width="64" height="64" fill="url(#lg1)"/>
+            <g transform="translate(8,12)" fill="#fff"><path d="M0 24c10 6 26 6 36 0l-4-8H4L0 24z" /></g>
+          </svg>
+          <div class="muted">Primary emblem (SVG)</div>
+        </div>
+
+        <div class="card" style="padding:12px;text-align:center">
+          <svg viewBox="0 0 64 64" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="30" fill="#02343b"/><path d="M8 40c10 6 28 6 48 0" stroke="#9ff" stroke-width="3" fill="none"/>
+          </svg>
+          <div class="muted">Badge</div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top:28px" class="muted">© Daot — crafted with ocean love • Replace placeholders in /images/ and /sounds/ with your licensed media.</footer>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" tabindex="-1" role="dialog" aria-hidden="true">
+    <button onclick="closeLightbox()" class="ghost" style="position:absolute;top:18px;right:22px;z-index:1010">Close</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+<script>
+/* ------------- PAGE BOILERPLATE ------------- */
+document.addEventListener('DOMContentLoaded', ()=> {
+  // hide loader once assets (very basic) ready
+  setTimeout(()=>{document.getElementById('loader').style.display='none';document.getElementById('app').style.opacity='1';},700);
+
+  // theme switching
+  const themeSel = document.getElementById('theme');
+  themeSel.addEventListener('change', (e)=>{ document.body.className = ''; document.body.classList.add(e.target.value); localStorage.setItem('daotTheme', e.target.value); });
+  // mobile theme select copy
+  const themeMobile = document.getElementById('themeMobile');
+  themeMobile.innerHTML = themeSel.innerHTML;
+  themeMobile.addEventListener('change', (e)=>{ document.body.className=''; document.body.classList.add(e.target.value); themeSel.value=e.target.value; localStorage.setItem('daotTheme', e.target.value); });
+
+  const savedTheme = localStorage.getItem('daotTheme') || 'theme-1';
+  document.body.className = ''; document.body.classList.add(savedTheme);
+  themeSel.value = savedTheme; themeMobile.value = savedTheme;
+
+  // lightbox
+  const images = Array.from(document.querySelectorAll('#galleryGrid img'));
+  images.forEach((img, i)=> img.addEventListener('click', ()=> openLightbox(i)));
+  window.addEventListener('keydown', (e)=> {
+    if(document.getElementById('lightbox').classList.contains('show')){
+      if(e.key === 'Escape') closeLightbox();
+      if(e.key === 'ArrowRight') navigateLightbox(1);
+      if(e.key === 'ArrowLeft') navigateLightbox(-1);
+    }
+  });
+
+  // gallery array
+  window._gallery = images.map(i=>i.src);
+
+  // populate dots for carousel
+  const carousel = document.getElementById('carousel');
+  const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+  const dots = document.getElementById('dots');
+  slides.forEach((s,idx)=>{
+    const d = document.createElement('div'); d.className='dot'+(idx===0?' active':''); d.dataset.index=idx; d.addEventListener('click', ()=>gotoSlide(idx));
+    dots.appendChild(d);
+  });
+
+  // counters animation
+  const counters = document.querySelectorAll('.num');
+  counters.forEach(c=>{
+    const target = +c.dataset.target;
+    let cur=0;
+    const step = Math.max(1, Math.floor(target/120));
+    const iv = setInterval(()=>{
+      cur += step;
+      if(cur >= target){cur = target; clearInterval(iv);}
+      c.textContent = cur;
+    },12);
+  });
+
+  // ports
+  document.querySelectorAll('.port').forEach(p=>{
+    p.style.cursor='pointer';
+    p.addEventListener('click', ()=>{ document.getElementById('portDesc').textContent = p.dataset.name + ' — a famous port with rich maritime history.'; });
+  });
+
+  // slideshow auto
+  let carouselIndex = 0;
+  window.nextSlide = ()=> { gotoSlide((carouselIndex+1)%slides.length); }
+  window.prevSlide = ()=> { gotoSlide((carouselIndex-1+slides.length)%slides.length); }
+  window.gotoSlide = (idx)=> {
+    slides.forEach(s=>s.classList.remove('active'));
+    slides[idx].classList.add('active');
+    carouselIndex = idx;
+    document.querySelectorAll('.dot').forEach(d=>d.classList.remove('active'));
+    document.querySelectorAll('.dot')[idx].classList.add('active');
+  }
+  setInterval(()=> nextSlide(),8000);
+
+  // checklist load
+  const checkInputs = document.querySelectorAll('#checklist input[type=checkbox]');
+  checkInputs.forEach(inp=>{
+    const key = 'check_'+inp.dataset.key;
+    const val = localStorage.getItem(key);
+    if(val === '1') inp.checked = true;
+    inp.addEventListener('change', ()=> localStorage.setItem(key, inp.checked ? '1' : '0'));
+  });
+
+  // newsletter: show saved demo
+  const msg = localStorage.getItem('nlMsg'); if(msg) document.getElementById('nlMsg').textContent = msg;
+});
+
+/* ------------- LIGHTBOX ------------- */
+function openLightbox(index){
+  const lb = document.getElementById('lightbox'); lb.classList.add('show'); lb.setAttribute('aria-hidden','false');
+  window._lbIndex = index;
+  document.getElementById('lightboxImg').src = window._gallery[index] || '';
+  document.getElementById('lightbox').

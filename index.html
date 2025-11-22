@@ -5,14 +5,55 @@
   <title>Raizer — Find, compare, and buy cars</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Raizer helps you find, compare, and buy cars. Explore listings, specs, reviews, and calculators." />
-  <link rel="preload" href="/css/main.css" as="style" />
-  <link rel="stylesheet" href="/css/main.css" />
-  <link rel="stylesheet" href="/css/theme.css" />
-  <link rel="stylesheet" href="/css/neon.css" />
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🚗</text></svg>">
   <meta name="theme-color" content="#0c0f14" />
-  <!-- Schema.org/JSON-LD example for homepage -->
+  <style>
+    :root {
+      --bg:#0c0f14; --bg2:#121621; --text:#e6e9ef; --muted:#9aa3af; --primary:#30e3ff; --accent:#9a6cff;
+      --green:#29c76f; --red:#ff5577; --yellow:#ffd166; --card:#151a27; --border:#1e2533;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:var(--primary);text-decoration:none}
+    .app-header,.app-footer{padding:16px 24px;border-bottom:1px solid var(--border)}
+    .app-footer{border-top:1px solid var(--border);border-bottom:none}
+    .logo{display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.3px}
+    .nav{display:flex;gap:16px;flex-wrap:wrap}
+    .header-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+    main#app{min-height:70vh;padding:16px 24px}
+    .grid{display:grid;gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+    .btn{background:linear-gradient(90deg,var(--accent),var(--primary));border:none;color:white;padding:10px 14px;border-radius:10px;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid var(--border);color:var(--text)}
+    .btn-icon{background:transparent;border:1px solid var(--border);color:var(--text);padding:8px;border-radius:10px;cursor:pointer}
+    .input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--text)}
+    .input-group{display:flex;gap:8px;flex-wrap:wrap}
+    .flex{display:flex;gap:16px;align-items:center}
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .tag{font-size:12px;color:var(--muted);border:1px dashed var(--border);border-radius:999px;padding:4px 8px}
+    .hero{position:relative;height:42vh;background:radial-gradient(1200px 420px at 15% 15%,rgba(48,227,255,.25),transparent 60%),linear-gradient(120deg,rgba(154,108,255,.2),transparent),url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;border-radius:18px;overflow:hidden}
+    .hero-content{position:absolute;bottom:24px;left:24px;max-width:580px;backdrop-filter:blur(8px);background:rgba(12,15,20,.35);padding:16px;border-radius:12px}
+    .search-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+    .list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .list.compact{grid-template-columns:1fr}
+    .car-card img{width:100%;height:180px;object-fit:cover;border-radius:10px}
+    .carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+    .carousel>*{scroll-snap-align:start;min-width:280px}
+    .badge{padding:4px 8px;border-radius:8px;background:rgba(48,227,255,.12);color:var(--primary);font-size:12px}
+    .kpi{display:flex;gap:16px;flex-wrap:wrap}
+    .kpi .cell{background:var(--bg2);border:1px solid var(--border);padding:12px;border-radius:10px}
+    .gallery{display:grid;grid-template-columns:2fr 1fr;gap:8px}
+    .gallery img{width:100%;border-radius:8px;object-fit:cover}
+    .table{width:100%;border-collapse:collapse;margin-top:12px}
+    .table th,.table td{border-bottom:1px solid var(--border);padding:8px;text-align:left;font-size:14px}
+    .toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:12px 14px;border-radius:10px}
+    .neon-line{height:1px;background:linear-gradient(90deg,transparent,var(--accent),var(--primary),transparent);filter:drop-shadow(0 0 6px var(--accent))}
+    .cursor-custom{cursor:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22><circle cx=%2216%22 cy=%2216%22 r=%225%22 fill=%22%2330e3ff%22/></svg>') 16 16, auto}
+    @media (max-width:980px){.search-bar{grid-template-columns:1fr 1fr 1fr}.list{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery{grid-template-columns:1fr}}
+    @media (max-width:640px){.list{grid-template-columns:1fr}.hero{height:36vh}}
+    .theme-light{--bg:#f5f7fb;--bg2:#ffffff;--text:#101316;--muted:#404a57;--card:#ffffff;--border:#e6e9ef}
+  </style>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -27,10 +68,10 @@
   }
   </script>
 </head>
-<body class="theme-dark">
+<body class="theme-dark cursor-custom">
   <header class="app-header">
     <div class="logo">
-      <img src="/assets/logos/raizer.svg" alt="Raizer" />
+      <span style="font-size:20px">🚗</span>
       <span>Raizer</span>
     </div>
     <nav class="nav">
@@ -44,9 +85,7 @@
       <a href="#/contact">Contact</a>
     </nav>
     <div class="header-actions">
-      <button id="themeToggle" class="btn-icon" aria-label="Toggle theme">
-        <svg><use href="/assets/icons/moon.svg#icon"/></svg>
-      </button>
+      <button id="themeToggle" class="btn-icon" aria-label="Toggle theme">🌓</button>
       <button id="liveChatToggle" class="btn">Live chat</button>
     </div>
   </header>
@@ -80,10 +119,822 @@
     <small>© <span id="year"></span> Raizer. All rights reserved.</small>
   </footer>
 
-  <script src="/js/router.js" defer></script>
-  <script src="/js/store.js" defer></script>
-  <script src="/js/data.js" defer></script>
-  <script src="/js/ui.js" defer></script>
-  <script src="/js/app.js" defer></script>
+  <script>
+    // ===== Data =====
+    const BRANDS = ["Toyota","Honda","Ford","Tesla","BMW","Mercedes","Hyundai","Kia","Nissan","Audi"];
+    const CARS = [
+      {
+        id: "tesla-model-3-2024",
+        title: "2024 Tesla Model 3 Long Range",
+        brand: "Tesla",
+        price: 42990,
+        year: 2024,
+        mileage: 1200,
+        body: "Sedan",
+        engine: "Electric",
+        transmission: "Automatic",
+        color: "Pearl White",
+        horsepower: 393,
+        fuelEconomy: { city: 134, highway: 126, unit: "MPGe" },
+        features: ["Autopilot","Heated seats","Wireless CarPlay","Premium audio"],
+        safety: { rating: 5, agency: "NHTSA" },
+        popularity: 92,
+        images: [
+          "https://images.unsplash.com/photo-1549921296-3b4a3d3a5b22?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1483721310020-03333e577078?q=80&w=1200&auto=format&fit=crop"
+        ],
+        video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        seller: { name: "Raizer Direct", email: "sales@raizer.example", phone: "+1 555 1100" },
+        vin: "5YJ3E1EA7JF000001",
+        professionalScore: 8.9
+      },
+      {
+        id: "toyota-corolla-2023",
+        title: "2023 Toyota Corolla SE",
+        brand: "Toyota",
+        price: 23990,
+        year: 2023,
+        mileage: 9800,
+        body: "Sedan",
+        engine: "Gas",
+        transmission: "Automatic",
+        color: "Black Sand Pearl",
+        horsepower: 169,
+        fuelEconomy: { city: 31, highway: 40, unit: "MPG" },
+        features: ["Adaptive cruise","Lane keep","Android Auto"],
+        safety: { rating: 5, agency: "IIHS" },
+        popularity: 87,
+        images: [
+          "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1200&auto=format&fit=crop"
+        ],
+        video: "https://www.youtube.com/embed/oHg5SJYRHA0",
+        seller: { name: "Metro Motors", email: "toyota@metro.example" },
+        vin: "JTDEPMAE0PJ000002",
+        professionalScore: 8.1
+      },
+      {
+        id: "honda-civic-2022",
+        title: "2022 Honda Civic Sport",
+        brand: "Honda",
+        price: 21950,
+        year: 2022,
+        mileage: 15000,
+        body: "Sedan",
+        engine: "Gas",
+        transmission: "Manual",
+        color: "Sonic Gray",
+        horsepower: 180,
+        fuelEconomy: { city: 30, highway: 37, unit: "MPG" },
+        features: ["Adaptive cruise","Apple CarPlay","Blind spot monitor"],
+        safety: { rating: 5, agency: "IIHS" },
+        popularity: 83,
+        images: [
+          "https://images.unsplash.com/photo-1483721310020-03333e577078?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop"
+        ],
+        video: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        seller: { name: "City Autos", email: "civic@city.example" },
+        vin: "19XFC2F59GE000003",
+        professionalScore: 8.0
+      }
+    ];
+    const NEWS = [
+      { id:"news-ev-tax", title:"EV incentives updated for 2025", date:"2025-11-12", category:"Industry", excerpt:"New thresholds and point-of-sale rebates rolled out.", url:"#/news/news-ev-tax" },
+      { id:"news-new-supra", title:"2026 Supra teased", date:"2025-11-18", category:"New Releases", excerpt:"Inline-6 hybrid configuration rumored.", url:"#/news/news-new-supra" }
+    ];
+
+    // ===== Store (state) =====
+    const Store = {
+      state: {
+        theme: localStorage.getItem("theme") || "dark",
+        user: JSON.parse(localStorage.getItem("user") || "null"),
+        wishlist: JSON.parse(localStorage.getItem("wishlist") || "[]"),
+        savedSearches: JSON.parse(localStorage.getItem("savedSearches") || "[]"),
+        recentlyViewed: JSON.parse(localStorage.getItem("recentlyViewed") || "[]"),
+        compareQueue: JSON.parse(localStorage.getItem("compareQueue") || "[]"),
+        alerts: JSON.parse(localStorage.getItem("alerts") || "[]")
+      },
+      save() {
+        localStorage.setItem("theme", this.state.theme);
+        localStorage.setItem("user", JSON.stringify(this.state.user));
+        localStorage.setItem("wishlist", JSON.stringify(this.state.wishlist));
+        localStorage.setItem("savedSearches", JSON.stringify(this.state.savedSearches));
+        localStorage.setItem("recentlyViewed", JSON.stringify(this.state.recentlyViewed));
+        localStorage.setItem("compareQueue", JSON.stringify(this.state.compareQueue));
+        localStorage.setItem("alerts", JSON.stringify(this.state.alerts));
+      },
+      login(email, password) {
+        if (email && password) {
+          this.state.user = { id: crypto.randomUUID(), email, role: "buyer" };
+          this.save(); return true;
+        }
+        return false;
+      },
+      signup(email, password) { return this.login(email, password); },
+      logout(){ this.state.user = null; this.save(); },
+      addWishlist(id){ if (!this.state.wishlist.includes(id)) this.state.wishlist.push(id); this.save(); },
+      removeWishlist(id){ this.state.wishlist = this.state.wishlist.filter(x=>x!==id); this.save(); },
+      addRecentlyViewed(id){
+        this.state.recentlyViewed = [id, ...this.state.recentlyViewed.filter(x=>x!==id)].slice(0,20);
+        this.save();
+      },
+      addCompare(id){ if (this.state.compareQueue.length>=4) return false; if(!this.state.compareQueue.includes(id)) this.state.compareQueue.push(id); this.save(); return true; },
+      removeCompare(id){ this.state.compareQueue = this.state.compareQueue.filter(x=>x!==id); this.save(); }
+    };
+
+    // ===== Utilities =====
+    const $ = s => document.querySelector(s);
+    function toast(msg){
+      const t=document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t);
+      setTimeout(()=>t.remove(),2500);
+    }
+
+    // ===== Router =====
+    const routes = {
+      "/": renderHomepage,
+      "/listings": renderListings,
+      "/details": renderDetails,
+      "/compare": renderCompare,
+      "/tools": renderTools,
+      "/news": renderNews,
+      "/account": renderAccount,
+      "/seller": renderSeller,
+      "/contact": renderContact
+    };
+    function navigate(){
+      const app = $("#app");
+      const [path, query] = (location.hash.slice(1) || "/").split("?");
+      const render = routes[path] || renderHomepage;
+      app.innerHTML = "";
+      render(app, new URLSearchParams(query || ""));
+    }
+    window.addEventListener("hashchange", navigate);
+    window.addEventListener("DOMContentLoaded", ()=>{
+      $("#year").textContent = new Date().getFullYear();
+      document.body.classList.toggle("theme-dark", Store.state.theme==="dark");
+      document.body.classList.toggle("theme-light", Store.state.theme==="light");
+      $("#themeToggle").addEventListener("click", ()=>{
+        Store.state.theme = Store.state.theme==="dark" ? "light" : "dark";
+        Store.save();
+        document.body.classList.toggle("theme-dark", Store.state.theme==="dark");
+        document.body.classList.toggle("theme-light", Store.state.theme==="light");
+      });
+      $("#liveChatToggle").addEventListener("click", ()=> toast("Live chat coming soon. Leave a message in Contact."));
+      navigate();
+    });
+
+    // ===== Homepage =====
+    function renderHomepage(el){
+      el.innerHTML = `
+        <section class="hero">
+          <div class="hero-content">
+            <h1>Drive what's next.</h1>
+            <p>Search by model, brand, price, or year. Explore featured rides and curated reviews.</p>
+            <div class="search-bar">
+              <input id="q-model" class="input" placeholder="Model" />
+              <select id="q-brand" class="input">${["","Tesla","Toyota","Honda","Ford","BMW","Mercedes"].map(b=>`<option>${b}</option>`).join("")}</select>
+              <input id="q-price" class="input" placeholder="Max price" type="number" />
+              <input id="q-year" class="input" placeholder="Min year" type="number" />
+              <button id="q-search" class="btn">Search</button>
+            </div>
+            <div class="row" style="margin-top:8px">
+              <a class="tag" href="#/listings?new=true">New Cars</a>
+              <a class="tag" href="#/listings?used=true">Used Cars</a>
+              <a class="tag" href="#/compare">Compare</a>
+              <a class="tag" href="#/news">Reviews</a>
+            </div>
+          </div>
+        </section>
+
+        <div class="neon-line" style="margin:16px 0"></div>
+
+        <section class="card">
+          <h2>Featured cars</h2>
+          <div class="carousel">
+            ${CARS.slice(0,5).map(c=>`
+              <div class="car-card card" style="min-width:280px">
+                <img src="${c.images[0]}" alt="${c.title}" loading="lazy" />
+                <h3>${c.title}</h3>
+                <p><span class="badge">$${c.price.toLocaleString()}</span> • ${c.engine} • ${c.transmission}</p>
+                <div class="row">
+                  <a class="btn secondary" href="#/details?id=${c.id}">View</a>
+                  <button class="btn" data-id="${c.id}" data-action="wishlist">Wishlist</button>
+                  <button class="btn secondary" data-id="${c.id}" data-action="compare">Compare</button>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Car of the week</h2>
+          ${renderCarOfWeek(CARS)}
+        </section>
+
+        <section class="card">
+          <h2>Latest news</h2>
+          <div class="list compact">
+            ${NEWS.map(n=>`
+              <div class="card">
+                <h4>${n.title}</h4>
+                <small>${n.date} • ${n.category}</small>
+                <p>${n.excerpt}</p>
+                <a class="btn secondary" href="${n.url}">Read</a>
+              </div>
+            ").join("")}
+          </div>
+        </section>
+      `;
+      el.querySelector("#q-search").addEventListener("click", ()=>{
+        const qs = new URLSearchParams({
+          model: el.querySelector("#q-model").value || "",
+          brand: el.querySelector("#q-brand").value || "",
+          maxPrice: el.querySelector("#q-price").value || "",
+          minYear: el.querySelector("#q-year").value || ""
+        }).toString();
+        location.hash = `#/listings?${qs}`;
+      });
+      el.querySelectorAll("button[data-action]").forEach(btn=>{
+        const id = btn.getAttribute("data-id"), action = btn.getAttribute("data-action");
+        btn.addEventListener("click", ()=>{
+          if(action==="wishlist"){ Store.addWishlist(id); toast("Added to wishlist."); }
+          if(action==="compare"){ Store.addCompare(id) ? toast("Added to compare.") : toast("Compare limit is 4 cars."); }
+        });
+      });
+      function renderCarOfWeek(cars){
+        const featured = [...cars].sort((a,b)=>b.popularity-a.popularity)[0];
+        return `
+          <div class="flex">
+            <img src="${featured.images[0]}" alt="${featured.title}" style="width:260px;height:160px;object-fit:cover;border-radius:10px" />
+            <div>
+              <h3>${featured.title}</h3>
+              <p>Horsepower: ${featured.horsepower} • Safety: ${featured.safety.rating}/5 • Pro score: ${featured.professionalScore}</p>
+              <a class="btn" href="#/details?id=${featured.id}">Explore</a>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // ===== Listings =====
+    function renderListings(el, params){
+      const layout = params.get("layout")==="list" ? "compact" : "";
+      const filters = {
+        brand: params.get("brand") || "",
+        minYear: Number(params.get("minYear") || 0),
+        maxPrice: Number(params.get("maxPrice") || 0),
+        body: params.get("body") || "",
+        engine: params.get("engine") || "",
+        transmission: params.get("transmission") || "",
+        color: params.get("color") || "",
+        mileageMax: Number(params.get("mileageMax") || 0),
+        sort: params.get("sort") || ""
+      };
+      const list = applyFilters(CARS, filters);
+      el.innerHTML = `
+        <div class="card">
+          <h2>Car listings</h2>
+          <div class="input-group row">
+            <select id="brand" class="input">${["","All",...BRANDS].map(b=>`<option value="${b}">${b}</option>`).join("")}</select>
+            <input id="price" class="input" placeholder="Max price" type="number" />
+            <input id="mileage" class="input" placeholder="Max mileage" type="number" />
+            <input id="year" class="input" placeholder="Min year" type="number" />
+            <select id="body" class="input">
+              ${["","Sedan","SUV","Hatchback","Pickup","Coupe"].map(b=>`<option>${b}</option>`).join("")}
+            </select>
+            <select id="engine" class="input">
+              ${["","Electric","Hybrid","Gas","Diesel"].map(e=>`<option>${e}</option>`).join("")}
+            </select>
+            <select id="trans" class="input">${["","Automatic","Manual"].map(t=>`<option>${t}</option>`).join("")}</select>
+            <input id="color" class="input" placeholder="Color" />
+            <select id="sort" class="input">
+              <option value="">Sort</option>
+              <option value="priceAsc">Price Low→High</option>
+              <option value="priceDesc">Price High→Low</option>
+              <option value="yearDesc">Year Newest</option>
+              <option value="mileageAsc">Mileage Low→High</option>
+              <option value="popDesc">Popularity</option>
+            </select>
+            <button id="apply" class="btn">Apply</button>
+            <button id="saveSearch" class="btn secondary">Save search</button>
+            <button id="layoutToggle" class="btn secondary">${layout ? "Grid" : "List"}</button>
+          </div>
+        </div>
+
+        <div class="list ${layout}">
+          ${list.map(c=>renderCard(c)).join("") || `<div class="card"><p>No cars match your filters.</p></div>`}
+        </div>
+      `;
+      el.querySelector("#apply").addEventListener("click", ()=>{
+        const qs = new URLSearchParams({
+          brand: val("#brand"), maxPrice: val("#price"), mileageMax: val("#mileage"),
+          minYear: val("#year"), body: val("#body"), engine: val("#engine"), transmission: val("#trans"),
+          color: val("#color"), sort: val("#sort"), layout
+        }).toString();
+        location.hash = `#/listings?${qs}`;
+      });
+      el.querySelector("#saveSearch").addEventListener("click", ()=>{
+        Store.state.savedSearches.push({ id: crypto.randomUUID(), date: Date.now(), filters });
+        Store.save(); toast("Search saved. View in Account.");
+      });
+      el.querySelector("#layoutToggle").addEventListener("click", ()=>{
+        const qs = new URLSearchParams(location.hash.split("?")[1] || "");
+        qs.set("layout", layout ? "grid" : "list");
+        location.hash = `#/listings?${qs.toString()}`;
+      });
+      function val(sel){ return el.querySelector(sel).value || ""; }
+      function renderCard(c){
+        return `
+          <div class="car-card card">
+            <img src="${c.images[0]}" alt="${c.title}" loading="lazy" />
+            <h3>${c.title}</h3>
+            <p>$${c.price.toLocaleString()} • ${c.year} • ${c.mileage.toLocaleString()} mi • ${c.engine} • ${c.transmission}</p>
+            <div class="row">
+              <a class="btn" href="#/details?id=${c.id}">Details</a>
+              <button class="btn secondary" onclick="location.hash='#/compare?add=${c.id}'">Compare</button>
+              <button class="btn secondary" onclick="(function(id){Store.addWishlist(id);toast('Added to wishlist.')})('${c.id}')">Wishlist</button>
+            </div>
+          </div>
+        `;
+      }
+      function applyFilters(cars, f){
+        let out=[...cars];
+        if (f.brand && f.brand!=="All") out=out.filter(c=>c.brand===f.brand);
+        if (f.minYear) out=out.filter(c=>c.year>=f.minYear);
+        if (f.maxPrice) out=out.filter(c=>c.price<=f.maxPrice);
+        if (f.body) out=out.filter(c=>c.body===f.body);
+        if (f.engine) out=out.filter(c=>c.engine===f.engine);
+        if (f.transmission) out=out.filter(c=>c.transmission===f.transmission);
+        if (f.color) out=out.filter(c=>c.color.toLowerCase().includes(f.color.toLowerCase()));
+        if (f.mileageMax) out=out.filter(c=>c.mileage<=f.mileageMax);
+        if (f.sort==="priceAsc") out.sort((a,b)=>a.price-b.price);
+        if (f.sort==="priceDesc") out.sort((a,b)=>b.price-a.price);
+        if (f.sort==="yearDesc") out.sort((a,b)=>b.year-a.year);
+        if (f.sort==="mileageAsc") out.sort((a,b)=>a.mileage-b.mileage);
+        if (f.sort==="popDesc") out.sort((a,b)=>b.popularity-a.popularity);
+        return out;
+      }
+    }
+
+    // ===== Details =====
+    function renderDetails(el, params){
+      const id = params.get("id");
+      const car = CARS.find(c=>c.id===id);
+      if(!car){ el.innerHTML = `<div class="card"><p>Car not found.</p></div>`; return; }
+      Store.addRecentlyViewed(id);
+      el.innerHTML = `
+        <article class="card">
+          <h2>${car.title}</h2>
+          <div class="gallery">
+            <img src="${car.images[0]}" alt="${car.title}" id="heroImg" />
+            <div>
+              ${car.images.map((src,i)=>`<img src="${src}" alt="${car.title} ${i}" class="thumb" style="height:76px;cursor:zoom-in" />`).join("")}
+            </div>
+          </div>
+          <div class="kpi" style="margin-top:12px">
+            <div class="cell"><strong>Price:</strong> $${car.price.toLocaleString()}</div>
+            <div class="cell"><strong>Horsepower:</strong> ${car.horsepower} hp</div>
+            <div class="cell"><strong>Fuel:</strong> ${car.fuelEconomy.city}/${car.fuelEconomy.highway} ${car.fuelEconomy.unit}</div>
+            <div class="cell"><strong>Safety:</strong> ${car.safety.rating}/5 ${car.safety.agency}</div>
+          </div>
+
+          <h3>360° viewer</h3>
+          <div class="card" style="height:260px;display:flex;align-items:center;justify-content:center;border-style:dashed">
+            <p>Drag to rotate — plug in 360 asset or WebGL here.</p>
+          </div>
+
+          <h3>Specs</h3>
+          <table class="table">
+            <tr><th>Brand</th><td>${car.brand}</td></tr>
+            <tr><th>Year</th><td>${car.year}</td></tr>
+            <tr><th>Body</th><td>${car.body}</td></tr>
+            <tr><th>Engine</th><td>${car.engine}</td></tr>
+            <tr><th>Transmission</th><td>${car.transmission}</td></tr>
+            <tr><th>Color</th><td>${car.color}</td></tr>
+            <tr><th>VIN</th><td>${car.vin}</td></tr>
+            <tr><th>Features</th><td>${car.features.join(", ")}</td></tr>
+          </table>
+
+          <h3>Engine performance</h3>
+          <p>Estimated 0–60 mph in ~4.2s (LR), top speed ~145 mph. Battery/ICE specifics depend on trim.</p>
+
+          <h3>Interior/Exterior</h3>
+          <p>Minimalist cockpit, premium seats, aero-optimized exterior with LED lighting and panoramic roof.</p>
+
+          <h3>Safety ratings</h3>
+          <p>Overall ${car.safety.rating}/5 per ${car.safety.agency}. Check recalls in News & Reviews.</p>
+
+          <h3>Review videos</h3>
+          <div class="card">
+            <iframe src="${car.video}" title="Car review" style="width:100%;height:300px" allowfullscreen></iframe>
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <a class="btn" href="#/compare?add=${car.id}">Compare</a>
+            <button class="btn secondary" id="finance">Financing calculator</button>
+            <button class="btn secondary" id="contact">Contact seller</button>
+            <button class="btn secondary" id="wishlist">Add to wishlist</button>
+          </div>
+
+          <div id="financePanel" class="card" style="display:none;margin-top:12px">
+            <h4>Financing calculator</h4>
+            <div class="input-group">
+              <input id="loanPrice" class="input" type="number" value="${car.price}" />
+              <input id="down" class="input" type="number" placeholder="Down payment" value="5000" />
+              <input id="apr" class="input" type="number" placeholder="APR %" value="6.5" />
+              <input id="term" class="input" type="number" placeholder="Months" value="60" />
+              <button id="calcLoan" class="btn">Calculate</button>
+            </div>
+            <p id="loanOut" class="tag"></p>
+          </div>
+
+          <div id="contactPanel" class="card" style="display:none;margin-top:12px">
+            <h4>Contact seller / Request quote</h4>
+            <div class="input-group">
+              <input id="name" class="input" placeholder="Your name" />
+              <input id="email" class="input" placeholder="Your email" />
+            </div>
+            <textarea id="msg" class="input" rows="4" placeholder="Message"></textarea>
+            <div class="row"><button id="sendMsg" class="btn">Send</button></div>
+          </div>
+        </article>
+      `;
+      el.querySelectorAll(".thumb").forEach(t=>{
+        t.addEventListener("click", ()=>{ el.querySelector("#heroImg").src=t.src; el.querySelector("#heroImg").style.transform="scale(1.02)"; setTimeout(()=> el.querySelector("#heroImg").style.transform="none", 180); });
+      });
+      el.querySelector("#wishlist").addEventListener("click", ()=>{ Store.addWishlist(car.id); toast("Added to wishlist."); });
+      el.querySelector("#finance").addEventListener("click", ()=> toggle("financePanel"));
+      el.querySelector("#calcLoan").addEventListener("click", ()=>{
+        const P = Number(val("#loanPrice")) - Number(val("#down"));
+        const r = Number(val("#apr"))/100/12;
+        const n = Number(val("#term"));
+        const m = r ? (P*r)/(1-Math.pow(1+r,-n)) : (P/n);
+        el.querySelector("#loanOut").textContent = isFinite(m) ? `Estimated monthly: $${m.toFixed(2)} (${n} months)` : "Check your inputs.";
+      });
+      el.querySelector("#contact").addEventListener("click", ()=> toggle("contactPanel"));
+      el.querySelector("#sendMsg").addEventListener("click", ()=> toast("Message sent. Seller will reach out via email."));
+      function toggle(id){ const p = el.querySelector(`#${id}`); p.style.display = p.style.display==="none" ? "block" : "none"; }
+      function val(sel){ return el.querySelector(sel).value || 0; }
+    }
+
+    // ===== Compare =====
+    function renderCompare(el, params){
+      const add = params.get("add");
+      if (add) Store.addCompare(add);
+      const ids = Store.state.compareQueue;
+      const selected = CARS.filter(c=>ids.includes(c.id));
+      el.innerHTML = `
+        <div class="card">
+          <h2>Car comparison</h2>
+          <div class="row">
+            ${selected.map(c=>`<div class="tag">${c.title} <button class="btn-icon" data-remove="${c.id}">x</button></div>`).join("") || "<p>Add cars from listings or details.</p>"}
+          </div>
+        </div>
+        ${selected.length ? `
+          <div class="card">
+            <h3>Overview</h3>
+            <div class="list compact">
+              ${selected.map(c=>`
+                <div class="card">
+                  <img src="${c.images[0]}" alt="${c.title}" style="width:100%;height:140px;object-fit:cover;border-radius:8px" />
+                  <h4>${c.title}</h4>
+                  <p>$${c.price.toLocaleString()} • ${c.year} • ${c.engine}</p>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+          <div class="card">
+            <h3>Specs, horsepower, fuel economy, features, safety, professional score</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  ${selected.map(c=>`<th>${c.brand} ${c.year}</th>`).join("")}
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Price</td>${selected.map(c=>`<td>$${c.price.toLocaleString()}</td>`).join("")}</tr>
+                <tr><td>Horsepower</td>${selected.map(c=>`<td>${c.horsepower} hp</td>`).join("")}</tr>
+                <tr><td>Fuel economy</td>${selected.map(c=>`<td>${c.fuelEconomy.city}/${c.fuelEconomy.highway} ${c.fuelEconomy.unit}</td>`).join("")}</tr>
+                <tr><td>Transmission</td>${selected.map(c=>`<td>${c.transmission}</td>`).join("")}</tr>
+                <tr><td>Safety</td>${selected.map(c=>`<td>${c.safety.rating}/5 ${c.safety.agency}</td>`).join("")}</tr>
+                <tr><td>Features</td>${selected.map(c=>`<td>${c.features.slice(0,6).join(", ")}</td>`).join("")}</tr>
+                <tr><td>Pro score</td>${selected.map(c=>`<td>${c.professionalScore}</td>`).join("")}</tr>
+              </tbody>
+            </table>
+          </div>
+        ` : "" }
+      `;
+      el.querySelectorAll("[data-remove]").forEach(btn=>{
+        btn.addEventListener("click", ()=>{ Store.removeCompare(btn.getAttribute("data-remove")); location.hash="#/compare"; });
+      });
+    }
+
+    // ===== Tools =====
+    function renderTools(el){
+      el.innerHTML = `
+        <div class="card">
+          <h2>Advanced tools</h2>
+          <div class="grid cols-3">
+            <div class="card">
+              <h3>Loan calculator</h3>
+              <input id="t-price" class="input" type="number" placeholder="Price" />
+              <input id="t-down" class="input" type="number" placeholder="Down payment" />
+              <input id="t-apr" class="input" type="number" placeholder="APR %" />
+              <input id="t-term" class="input" type="number" placeholder="Months" />
+              <button id="t-calc" class="btn">Calculate</button>
+              <p id="t-out" class="tag"></p>
+            </div>
+
+            <div class="card">
+              <h3>Insurance calculator</h3>
+              <input id="i-age" class="input" type="number" placeholder="Driver age" />
+              <input id="i-region" class="input" placeholder="Region" />
+              <input id="i-value" class="input" type="number" placeholder="Car value" />
+              <button id="i-calc" class="btn">Estimate</button>
+              <p id="i-out" class="tag"></p>
+            </div>
+
+            <div class="card">
+              <h3>Maintenance estimator</h3>
+              <input id="m-brand" class="input" placeholder="Brand" />
+              <input id="m-year" class="input" type="number" placeholder="Year" />
+              <input id="m-mileage" class="input" type="number" placeholder="Mileage" />
+              <button id="m-calc" class="btn">Estimate</button>
+              <p id="m-out" class="tag"></p>
+            </div>
+
+            <div class="card">
+              <h3>Trade-in value</h3>
+              <input id="tr-brand" class="input" placeholder="Brand" />
+              <input id="tr-model" class="input" placeholder="Model" />
+              <input id="tr-year" class="input" type="number" placeholder="Year" />
+              <input id="tr-mileage" class="input" type="number" placeholder="Mileage" />
+              <button id="tr-calc" class="btn">Estimate</button>
+              <p id="tr-out" class="tag"></p>
+            </div>
+
+            <div class="card">
+              <h3>VIN decoder</h3>
+              <input id="vin" class="input" placeholder="VIN" />
+              <button id="vin-calc" class="btn">Decode</button>
+              <pre id="vin-out" class="tag"></pre>
+            </div>
+
+            <div class="card">
+              <h3>Car history checker</h3>
+              <input id="hist-vin" class="input" placeholder="VIN" />
+              <button id="hist-check" class="btn">Check</button>
+              <p id="hist-out" class="tag"></p>
+            </div>
+          </div>
+        </div>
+      `;
+      $("#t-calc").addEventListener("click", ()=>{
+        const price=Number(val("#t-price")), down=Number(val("#t-down")), apr=Number(val("#t-apr")), months=Number(val("#t-term"));
+        const P = price - down, r = (apr/100)/12;
+        const m = months<=0 || P<=0 ? 0 : r ? (P*r)/(1-Math.pow(1+r,-months)) : (P/months);
+        set("#t-out", `Estimated monthly: $${m.toFixed(2)}`);
+      });
+      $("#i-calc").addEventListener("click", ()=>{
+        const age=Number(val("#i-age")), region=val("#i-region"), value=Number(val("#i-value"));
+        const base=600, ageF = age<25?1.6:age<35?1.3:1.1, regionF = /city/i.test(region)?1.25:1.0, valueF = Math.min(2.0, Math.max(0.8, value/25000));
+        set("#i-out", `Estimated annual: $${(base*ageF*regionF*valueF).toFixed(0)}`);
+      });
+      $("#m-calc").addEventListener("click", ()=>{
+        const brand=val("#m-brand"), year=Number(val("#m-year")), mileage=Number(val("#m-mileage"));
+        const age=new Date().getFullYear()-(year||new Date().getFullYear()), base=350;
+        const brandF=/bmw|mercedes|audi/i.test(brand)?1.6:/tesla/i.test(brand)?0.9:1.0;
+        const ageF=age>8?1.7:age>5?1.3:1.0, mileageF=mileage>120000?1.8:mileage>60000?1.3:1.0;
+        set("#m-out", `Estimated yearly: $${(base*brandF*ageF*mileageF).toFixed(0)}`);
+      });
+      $("#tr-calc").addEventListener("click", ()=>{
+        const brand=val("#tr-brand"), model=val("#tr-model"), year=Number(val("#tr-year")), mileage=Number(val("#tr-mileage"));
+        const base=Math.max(1000,(year-2000)*500), penalty=Math.max(0,(mileage-60000)*0.05);
+        const brandF=/toyota|honda|lexus/i.test(brand)?1.2:/bmw|audi|mercedes/i.test(brand)?1.1:1.0;
+        const modelF=/supra|type r|m3|wrx/i.test(model)?1.25:1.0;
+        set("#tr-out", `Estimated trade-in: $${Math.max(500,(base*brandF*modelF)-penalty).toLocaleString()}`);
+      });
+      $("#vin-calc").addEventListener("click", ()=>{
+        const v = val("#vin").toUpperCase();
+        set("#vin-out", JSON.stringify({ WMI:v.slice(0,3), VDS:v.slice(3,9), VIS:v.slice(9,17), note:"For full decode, integrate NHTSA API." }, null, 2));
+      });
+      $("#hist-check").addEventListener("click", ()=>{
+        set("#hist-out", "Connect to history API (Carfax/Autocheck) and display accidents, owners, title status.");
+      });
+      function val(s){ return el.querySelector(s).value || ""; }
+      function set(s,v){ el.querySelector(s).textContent = v; }
+    }
+
+    // ===== News =====
+    function renderNews(el){
+      el.innerHTML = `
+        <div class="card">
+          <h2>News & Reviews</h2>
+          <div class="row">
+            <span class="tag">Industry news</span>
+            <span class="tag">Releases</span>
+            <span class="tag">Comparisons</span>
+            <span class="tag">Recalls</span>
+            <span class="tag">Maintenance guides</span>
+          </div>
+        </div>
+        <div class="list compact">
+          ${NEWS.map(n=>`
+            <article class="card">
+              <h3>${n.title}</h3>
+              <small>${n.date} • ${n.category}</small>
+              <p>${n.excerpt}</p>
+              <a class="btn secondary" href="${n.url}">Read more</a>
+            </article>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // ===== Account =====
+    function renderAccount(el){
+      const u = Store.state.user;
+      el.innerHTML = `
+        <div class="card">
+          <h2>My account</h2>
+          ${u ? `
+            <p>Signed in as <strong>${u.email}</strong></p>
+            <button id="logout" class="btn secondary">Log out</button>
+          ` : `
+            <div class="input-group">
+              <input id="email" class="input" placeholder="Email" />
+              <input id="pass" class="input" type="password" placeholder="Password" />
+              <button id="login" class="btn">Log in</button>
+              <button id="signup" class="btn secondary">Sign up</button>
+            </div>
+          `}
+        </div>
+
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Favorites / Wishlist</h3>
+            ${renderList(Store.state.wishlist)}
+          </div>
+          <div class="card">
+            <h3>Recently viewed</h3>
+            ${renderList(Store.state.recentlyViewed)}
+          </div>
+          <div class="card">
+            <h3>Saved searches</h3>
+            ${(Store.state.savedSearches||[]).map(s=>`
+              <div class="row">
+                <span class="tag">${new Date(s.date).toLocaleString()}</span>
+                <button class="btn secondary" onclick="location.hash='#/listings?${new URLSearchParams(s.filters).toString()}'">Run</button>
+              </div>
+            ").join("") || "<p>No saved searches yet.</p>"}
+          </div>
+          <div class="card">
+            <h3>Alerts</h3>
+            <p>Turn on alerts to get notified of price drops.</p>
+            <button class="btn secondary" onclick="alert('Alerts enabled (demo).')">Enable alerts</button>
+          </div>
+        </div>
+      `;
+      if (!u){
+        el.querySelector("#login").addEventListener("click", ()=>{
+          Store.login(val("#email"), val("#pass")) ? location.hash="#/account" : alert("Invalid login.");
+        });
+        el.querySelector("#signup").addEventListener("click", ()=>{
+          Store.signup(val("#email"), val("#pass")) ? location.hash="#/account" : alert("Signup failed.");
+        });
+      } else {
+        el.querySelector("#logout").addEventListener("click", ()=>{ Store.logout(); location.hash="#/account"; });
+      }
+      function val(s){ return el.querySelector(s).value || ""; }
+      function renderList(ids){
+        if (!ids || !ids.length) return "<p>Empty.</p>";
+        return ids.map(id=>{
+          const c = CARS.find(x=>x.id===id);
+          if (!c) return "";
+          return `<div class="row"><span>${c.title}</span><a class="btn secondary" href="#/details?id=${id}">Open</a></div>`;
+        }).join("");
+      }
+    }
+
+    // ===== Seller Dashboard =====
+    let sellerListings = JSON.parse(localStorage.getItem("sellerListings")||"[]");
+    function renderSeller(el){
+      const u = Store.state.user;
+      if (!u){ el.innerHTML = `<div class="card"><p>Please log in to manage listings.</p><a class="btn" href="#/account">Log in</a></div>`; return; }
+      el.innerHTML = `
+        <div class="card">
+          <h2>Seller dashboard</h2>
+          <p>Manage your listings, images, stats, and chat with buyers.</p>
+        </div>
+
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Add listing</h3>
+            <input id="s-title" class="input" placeholder="Title" />
+            <input id="s-brand" class="input" placeholder="Brand" />
+            <input id="s-price" class="input" type="number" placeholder="Price" />
+            <input id="s-year" class="input" type="number" placeholder="Year" />
+            <input id="s-mileage" class="input" type="number" placeholder="Mileage" />
+            <input id="s-body" class="input" placeholder="Body type" />
+            <input id="s-engine" class="input" placeholder="Engine type" />
+            <input id="s-trans" class="input" placeholder="Transmission" />
+            <input id="s-color" class="input" placeholder="Color" />
+            <input id="s-images" class="input" placeholder="Image URLs, comma-separated" />
+            <button id="s-add" class="btn">Add</button>
+          </div>
+
+          <div class="card">
+            <h3>Your listings</h3>
+            <div id="s-list">${renderSellerList()}</div>
+          </div>
+
+          <div class="card">
+            <h3>Stats</h3>
+            <p>Views: ${Math.floor(Math.random()*500)}</p>
+            <p>Messages: ${Math.floor(Math.random()*20)}</p>
+            <p>Interested buyers: ${Math.floor(Math.random()*12)}</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Chat with buyers</h3>
+          <div style="height:200px;border:1px solid var(--border);border-radius:8px;padding:8px;overflow:auto">
+            <p><strong>Buyer:</strong> Is this still available?</p>
+            <p><strong>You:</strong> Yes, available. Want to book a test drive?</p>
+          </div>
+          <div class="input-group" style="margin-top:8px">
+            <input id="chatMsg" class="input" placeholder="Type a message" />
+            <button id="chatSend" class="btn">Send</button>
+          </div>
+        </div>
+      `;
+      el.querySelector("#s-add").addEventListener("click", ()=>{
+        const obj = {
+          id: crypto.randomUUID(),
+          title: val("#s-title"), brand: val("#s-brand"), price: Number(val("#s-price")), year: Number(val("#s-year")),
+          mileage: Number(val("#s-mileage")), body: val("#s-body"), engine: val("#s-engine"), transmission: val("#s-trans"),
+          color: val("#s-color"), images: val("#s-images").split(",").map(s=>s.trim()).filter(Boolean)
+        };
+        sellerListings.push(obj);
+        localStorage.setItem("sellerListings", JSON.stringify(sellerListings));
+        el.querySelector("#s-list").innerHTML = renderSellerList();
+        toast("Listing added.");
+      });
+      el.querySelector("#chatSend").addEventListener("click", ()=> toast("Message sent (demo)."));
+      function val(s){ return el.querySelector(s).value || ""; }
+      function renderSellerList(){
+        if (!sellerListings.length) return "<p>No listings yet.</p>";
+        return sellerListings.map(l=>`
+          <div class="card">
+            <h4>${l.title}</h4>
+            <p>$${l.price.toLocaleString()} • ${l.year} • ${l.brand}</p>
+            <div class="row">
+              <button class="btn secondary" onclick="(function(id){sellerListings=sellerListings.filter(x=>x.id!==id);localStorage.setItem('sellerListings',JSON.stringify(sellerListings));document.querySelector('#s-list').innerHTML='${""}';document.querySelector('#s-list').innerHTML=(${renderSellerList.toString()})();})('${l.id}')">Delete</button>
+            </div>
+          </div>
+        `).join("");
+      }
+    }
+
+    // ===== Contact =====
+    function renderContact(el){
+      el.innerHTML = `
+        <div class="card">
+          <h2>Contact & Support</h2>
+          <div class="grid cols-3">
+            <div class="card">
+              <h3>Contact form</h3>
+              <input id="c-name" class="input" placeholder="Name" />
+              <input id="c-email" class="input" placeholder="Email" />
+              <textarea id="c-msg" class="input" rows="4" placeholder="Message"></textarea>
+              <button id="c-send" class="btn">Send</button>
+              <p id="c-out" class="tag"></p>
+            </div>
+            <div class="card">
+              <h3>Dealership map</h3>
+              <div style="height:200px;background:#0f131b;border:1px dashed var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center">
+                <p>Embed Map (Google/OSM) here</p>
+              </div>
+            </div>
+            <div class="card" id="test-drive">
+              <h3>Test-drive booking</h3>
+              <input id="t-name" class="input" placeholder="Name" />
+              <input id="t-email" class="input" placeholder="Email" />
+              <input id="t-date" class="input" type="date" />
+              <input id="t-car" class="input" placeholder="Car model" />
+              <button id="t-book" class="btn">Book</button>
+              <p id="t-out" class="tag"></p>
+            </div>
+          </div>
+        </div>
+      `;
+      el.querySelector("#c-send").addEventListener("click", ()=> set("#c-out","Thanks! We'll reply via email."));
+      el.querySelector("#t-book").addEventListener("click", ()=> set("#t-out","Booked. Check your email for confirmation."));
+      function set(s,v){ el.querySelector(s).textContent=v; }
+    }
+  </script>
 </body>
 </html>
